@@ -11,6 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Perfect solution for long post pagination. This plugin creates fully customizable pagination buttons for posts with multiple pages.
 
 == Description ==
+Perfect solution for long post pagination. This plugin creates fully customizable pagination buttons for posts with multiple pages.
 
 * Two button layouts with subPage number and title.
 * Special icon on post/page **WYSIWYG** editior to insert manage subPages
