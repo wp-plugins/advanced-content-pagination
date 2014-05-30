@@ -101,7 +101,9 @@ class acp_options {
                             <li>If you like ACP and want to encourage us to develop and maintain it,why not do any or all of the following:</li>
                             <li>- Link to it so other folks can find out about it.</li>
                             <li>- Give it a good rating on <a href="http://wordpress.org/extend/plugins/advanced-content-pagination/" target="_blank">WordPress.org.</a></li>
-                            <li>- We spend as much of my spare time as possible working on Advanced Content Pagination and any donation is appreciated. Donations play a crucial role in supporting Free and Open Source Software projects. <div style="width:200px; float:right;"><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="QWCLJUDYGY7P8"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></form></div>
+                            <li>- We spend as much of my spare time as possible working on Advanced Content Pagination and any donation is appreciated. Donations play a crucial role in supporting Free and Open Source Software projects. <div style="width:200px; float:right;">
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="UAM3E699GTZ64"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></form>
+                            </div>
                             <h4>You have my sincere thanks and appreciation for using <em>ACP</em>.</h4>
                             <div style="clear:both;"></div>
                             </li>
@@ -139,7 +141,18 @@ class acp_options {
                                 <input type="checkbox" <?php checked($this->options->acp_paging_on_off == 1) ?> value="<?php echo $this->options->acp_paging_on_off; ?>" name="acp_paging_on_off" id="acp_paging_on_off" />
                             </label>
                         </td>
-                    </tr> 
+                    </tr>
+
+                    <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
+                        <th scope="row">
+                            Use Wordpress pagination shortcode and generate advanced pagination buttons                                    
+                        </th>
+                        <td colspan="3">
+                            <label for="acp_wp_shortcode_for_acp_btns">
+                                <input type="checkbox" <?php checked($this->options->acp_wp_shortcode_for_acp_btns == 1) ?> value="<?php echo $this->options->acp_wp_shortcode_for_acp_btns; ?>" id="acp_wp_shortcode_for_acp_btns" name="acp_wp_shortcode_for_acp_btns" />
+                            </label>
+                        </td>
+                    </tr>  
 
                     <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
                         <th scope="row">Pagnation Buttons Layout</th>
