@@ -34,7 +34,6 @@ class advanced_content_pagination {
     private $acp_css;
     private $shortcode_content;
     private $pattern = '|\[nextpage[^\[\]]*\](.+?)\[/nextpage\]|is';
-    private $wp_shortcode_pattern = '|\<!--nextpage--\>|is';
     private $page;
     private $query_page;
     private $curr_page = 0;
