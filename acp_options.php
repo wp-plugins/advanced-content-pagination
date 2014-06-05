@@ -144,17 +144,6 @@ class acp_options {
                     </tr>
 
                     <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
-                        <th scope="row">
-                            Use Wordpress pagination shortcode and generate advanced pagination buttons                                    
-                        </th>
-                        <td colspan="3">
-                            <label for="acp_wp_shortcode_for_acp_btns">
-                                <input type="checkbox" <?php checked($this->options->acp_wp_shortcode_for_acp_btns == 1) ?> value="<?php echo $this->options->acp_wp_shortcode_for_acp_btns; ?>" id="acp_wp_shortcode_for_acp_btns" name="acp_wp_shortcode_for_acp_btns" />
-                            </label>
-                        </td>
-                    </tr>  
-
-                    <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
                         <th scope="row">Pagnation Buttons Layout</th>
                         <td colspan="3">
                             <fieldset>

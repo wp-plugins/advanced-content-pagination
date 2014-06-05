@@ -29,7 +29,6 @@ class Options {
     public function initOptions($serialize_options) {
         $options = unserialize($serialize_options);
         $this->acp_paging_on_off = $options['acp_paging_on_off'];
-        $this->acp_wp_shortcode_for_acp_btns = $options['acp_wp_shortcode_for_acp_btns'];
         $this->acp_wp_shortcode_pagination_view = $options['acp_wp_shortcode_pagination_view'];
         $this->acp_plugin_pagination_type = $options['acp_plugin_pagination_type'];
         $this->acp_paging_buttons_location = $options['acp_paging_buttons_location'];
@@ -50,7 +49,6 @@ class Options {
     public function toArray() {
         $options = array(
             'acp_paging_on_off' => $this->acp_paging_on_off,
-            'acp_wp_shortcode_for_acp_btns' => $this->acp_wp_shortcode_for_acp_btns,
             'acp_wp_shortcode_pagination_view' => $this->acp_wp_shortcode_pagination_view,
             'acp_plugin_pagination_type' => $this->acp_plugin_pagination_type,
             'acp_paging_buttons_location' => $this->acp_paging_buttons_location,
