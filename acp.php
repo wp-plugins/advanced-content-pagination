@@ -14,13 +14,17 @@
  */
 
 
-if ( ! defined( 'WP_CONTENT_URL' ) ) define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
-if ( ! defined( 'WP_CONTENT_DIR' ) ) define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-if ( ! defined( 'WP_PLUGIN_URL' ) ) define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
-if ( ! defined( 'WP_PLUGIN_DIR' ) ) define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
+if (!defined('WP_CONTENT_URL'))
+    define('WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
+if (!defined('WP_CONTENT_DIR'))
+    define('WP_CONTENT_DIR', ABSPATH . 'wp-content');
+if (!defined('WP_PLUGIN_URL'))
+    define('WP_PLUGIN_URL', WP_CONTENT_URL . '/plugins');
+if (!defined('WP_PLUGIN_DIR'))
+    define('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins');
 
-define('PPACP_FOLDER', dirname(__FILE__) .'/' );
-define('PPACP_PATH', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ) . '/' );
+define('PPACP_FOLDER', dirname(__FILE__) . '/');
+define('PPACP_PATH', WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__)) . '/');
 
 
 
@@ -162,7 +166,7 @@ class advanced_content_pagination {
                 $active_item = ' active';
                 $link = '';
             }
-            
+
             if ($pages_count == 1) {
                 $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
             } else {
@@ -176,7 +180,7 @@ class advanced_content_pagination {
         }
     }
 
-    /**     
+    /**
      * @param type $curr_page the i-th shortcode in post content
      * @param type $pages_count the shortcodes count in post content
      * @param type $active_item the active page 
@@ -246,9 +250,22 @@ class advanced_content_pagination {
         } else {
             $response = 'No Content';
         }
-
-        echo $response;
+        echo do_shortcode($response);
         exit;
+    }
+
+    function ck13_fbgm_terms($atts) {
+        global $post;
+        extract(shortcode_atts(array(
+                    'ck_term' => '',
+                    'ck_sep' => ', ',
+                    'ck_before' => '',
+                    'ck_after' => ''
+                        ), $atts));
+
+        $show_the_terms = "";
+        $show_the_terms .= get_the_term_list($post->ID, "$ck_term", "$ck_before", "$ck_sep", "$ck_after");
+        return $show_the_terms;
     }
 
     /**
@@ -339,7 +356,7 @@ class advanced_content_pagination {
     /**
      * the dialog html to add shortcodes
      */
-    function add_dialog() {       
+    function add_dialog() {
         // the layout with title and paging number
         $button_style_2 = $this->options->acp_buttons_visual_style == 2;
         ?>
@@ -365,7 +382,7 @@ class advanced_content_pagination {
                         </tr>
                     </table>
                 </div>
-          
+
                 <div class="submit_container" style="text-align:right; padding-right:50px; display:block; padding-top:15px;">
                     <button id="insert_shorcode" class="insert_shortcode button button-primary button-large"><?php _e('Insert Page'); ?></button>
                 </div>
