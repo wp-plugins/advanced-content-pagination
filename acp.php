@@ -2,9 +2,10 @@
 /*
   Plugin Name: Advanced Content Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.0.0
+  Version: 1.0.1
   Author: gVectors Team (Artyom Chakhoyan, Gagik Zakaryan, Hakob Martirosyan)
-  Author URI: http://www.gvectors.com/advanced-content-pagination/
+  Author URI: http://www.gvectors.com/
+  Plugin URI: http://www.gvectors.com/advanced-content-pagination/
  */
 
 /*
@@ -133,16 +134,8 @@ class advanced_content_pagination {
             $this->query_page = get_query_var('page') ? get_query_var('page') : 1;
             $this->page++;
             extract(shortcode_atts(array(
-                        'title' => 'Title',
-                        'desc' => 'Description',
-                        'img' => -1
+                        'title' => 'Title'
                             ), $atts), EXTR_OVERWRITE);
-
-            $desc_count = $this->options->acp_buttons_description_maxlength_css;
-
-            if (strlen($desc) > $desc_count) {
-                $desc = mb_substr($desc, 0, $desc_count) . '&hellip;  ';
-            }
 
             $link;
             $anchor = '';
@@ -169,52 +162,32 @@ class advanced_content_pagination {
                 $active_item = ' active';
                 $link = '';
             }
-
-            $p_img = '';
-            if ($img == -1 || empty($img)) {
-                // loading default image
-                $p_img = plugins_url('advanced-content-pagination/files/img/default_img.png');
-            } else {
-
-                if (is_int(intval(trim($img)))) {
-                    $attachs = wp_get_attachment_image_src(trim($img));
-                    if (count($attachs)) :
-                        $p_img = $attachs[0];
-                    endif;
-                } else {
-                    // loading default image
-                    $p_img = plugins_url('advanced-content-pagination/files/img/default_img.png');
-                }
-            }
+            
             if ($pages_count == 1) {
-                $html = $this->build_pagination_html($loading_type, $this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), trim($desc), $content, $p_img);
+                $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
             } else {
-                $html = $this->build_pagination_html($loading_type, $this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), trim($desc), $this->shortcode_content, $p_img);
+                $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($this->shortcode_content));
             }
 
             $this->curr_page++;
             return $html;
         } else {
-            return $content;
+            return do_shortcode($content);
         }
     }
 
-    /**
-     * 
-     * @param type $loading_type the pages loading type (can be page reloading or ajax)
+    /**     
      * @param type $curr_page the i-th shortcode in post content
      * @param type $pages_count the shortcodes count in post content
      * @param type $active_item the active page 
      * @param type $page the i-th page
      * @param type $link the pages link
      * @param type $title the shortcode title attribute
-     * @param type $desc the shortcode description attribute
      * @param type $shortcode_content the shortcode content
-     * @param type $p_img the shortcode image attribute
      * @return type HTML the generated html
      */
-    private function build_pagination_html($loading_type, $curr_page, $pages_count, $active_item, $page, $link, $title, $desc, $shortcode_content, $p_img) {
-        $html;
+    private function build_pagination_html($curr_page, $pages_count, $active_item, $page, $link, $title, $shortcode_content) {
+        $html = '';
 
         $btn_visual_style = intval($this->options->acp_buttons_visual_style);
         $acp_wp_shortcode_pagination_view = intval($this->options->acp_wp_shortcode_pagination_view);
