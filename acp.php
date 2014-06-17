@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Content Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.0.1
+  Version: 1.0.0
   Author: gVectors Team (Artyom Chakhoyan, Gagik Zakaryan, Hakob Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
