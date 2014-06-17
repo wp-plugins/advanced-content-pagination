@@ -51,9 +51,8 @@ How to install the plugin and get it working.
 
 == Changelog ==
 
-= 1.0.0 =
-Initial version
-
 = 1.0.1 =
 Current version
 
+= 1.0.0 =
+Initial version
