@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: Advanced Content Pagination
+  Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
   Version: 1.0.1
   Author: gVectors Team (Artyom Chakhoyan, Gagik Zakaryan, Hakob Martirosyan)
@@ -119,7 +119,7 @@ class advanced_content_pagination {
      */
     public function add_plugin_options_page() {
         if (function_exists('add_options_page')) {
-            add_menu_page('AC Pagination', 'AC Pagination', 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url('advanced-content-pagination/files/img/web_site.png'), 100);
+            add_menu_page('AP Pagination', 'AP Pagination', 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url('advanced-content-pagination/files/img/web_site.png'), 100);
         }
     }
 
