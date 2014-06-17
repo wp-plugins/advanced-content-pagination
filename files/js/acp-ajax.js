@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
         var acp_postid = jQuery('#acp_post').val();
         var acp_shortcode_type = jQuery('#acp_shortcode').val();
         clickedItemId = clickedItemId.substring(4); 
-        var content = jQuery('#acp_content');        
+        var content = jQuery('#acp_content');       
                         
         jQuery.ajax({
             type: 'POST',
