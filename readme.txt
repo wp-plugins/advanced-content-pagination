@@ -42,7 +42,7 @@ How to install the plugin and get it working.
 
 == Screenshots ==
 
-1. APP on Front-End Screenshot #1
+1. APP on Front-End Screenshot screenshot-1.png
 2. APP Buttons Screenshot #2
 3. APP on Front-End Screenshot #3
 4. APP Ajax Loading #4
