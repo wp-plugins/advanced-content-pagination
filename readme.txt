@@ -1,7 +1,7 @@
 === Advanced Post Pagination ===
 Contributors: gVectors Team
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UAM3E699GTZ64
-Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content
+Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
 Tested up to: 3.9.1
 Stable tag: 1.0.1
@@ -34,7 +34,7 @@ How to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 
-= Please Check the Following Advanced Content Pagination Resources =
+= Please Check the Following Advanced Post Pagination Resources =
 
 * Plugin Page: <http://gvectors.com/advanced-content-pagination/>
 * Support Forum: <http://gvectors.com/questions/>
@@ -42,18 +42,17 @@ How to install the plugin and get it working.
 
 == Screenshots ==
 
-1. ACP on Front-End Screenshot #1
-2. ACP Buttons Screenshot #2
-3. ACP on Front-End Screenshot #3
-4. ACP Ajax Loading #4
-5. ACP on Back-end Screenshot #5
-6. ACP New page creator pop-up #6
+1. APP on Front-End Screenshot #1
+2. APP Buttons Screenshot #2
+3. APP on Front-End Screenshot #3
+4. APP Ajax Loading #4
+5. APP on Back-end Screenshot #5
+6. APP New page creator pop-up #6
 
 == Changelog ==
 
-= 1.0.1 = 
-Current Version
+= 1.0.1 =
+* Fixed Bug : Unprocessed shortcode issue.
 
 = 1.0.0 =
 Initial version
-
