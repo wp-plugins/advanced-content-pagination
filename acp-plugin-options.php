@@ -38,8 +38,6 @@ class Options {
         $this->acp_buttons_font_css = $options['acp_buttons_font_css'];
         $this->acp_buttons_text_color_css = $options['acp_buttons_text_color_css'];
         $this->acp_buttons_title_size_css = $options['acp_buttons_title_size_css'];
-        $this->acp_buttons_desc_size_css = $options['acp_buttons_desc_size_css'];
-        $this->acp_buttons_description_maxlength_css = $options['acp_buttons_description_maxlength_css'];
         $this->acp_buttons_visual_style = $options['acp_buttons_visual_style'];
         $this->acp_active_button_border_css = $options['acp_active_button_border_css'];
         $this->acp_active_button_background_css = $options['acp_active_button_background_css'];
@@ -58,8 +56,6 @@ class Options {
             'acp_buttons_font_css' => $this->acp_buttons_font_css,
             'acp_buttons_text_color_css' => $this->acp_buttons_text_color_css,
             'acp_buttons_title_size_css' => $this->acp_buttons_title_size_css,
-            'acp_buttons_desc_size_css' => $this->acp_buttons_desc_size_css,
-            'acp_buttons_description_maxlength_css' => $this->acp_buttons_description_maxlength_css,
             'acp_buttons_visual_style' => $this->acp_buttons_visual_style,
             'acp_active_button_border_css' => $this->acp_active_button_border_css,
             'acp_active_button_background_css' => $this->acp_active_button_background_css,
