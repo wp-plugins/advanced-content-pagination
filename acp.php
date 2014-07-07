@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.0.1
+  Version: 1.0.2
   Author: gVectors Team (Artyom Chakhoyan, Gagik Zakaryan, Hakob Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -59,6 +59,7 @@ class advanced_content_pagination {
         add_action('admin_enqueue_scripts', array(&$this, 'admin_page_styles_scripts'));
         add_action('wp_enqueue_scripts', array(&$this->acp_css, 'frontend_styles'));
         add_action('wp_enqueue_scripts', array(&$this, 'front_end_styles_scripts'));
+        add_filter('the_excerpt', array(&$this, 'do_nextpage_shortcode_in_excerpt'));
 
         if ($this->loading_type === 2) {
             add_action('wp_ajax_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
@@ -70,6 +71,14 @@ class advanced_content_pagination {
                 add_shortcode('nextpage', array(&$this, 'nextpage_shortcode'));
             }
         }
+    }
+
+    /*
+     * return excerpt from shortcodes
+     */
+
+    public function do_nextpage_shortcode_in_excerpt($excerpt) {
+        return do_shortcode(wp_trim_words(get_the_content(), 55));
     }
 
     /**
@@ -250,22 +259,9 @@ class advanced_content_pagination {
         } else {
             $response = 'No Content';
         }
-        echo do_shortcode($response);
+
+        echo $response;
         exit;
-    }
-
-    function ck13_fbgm_terms($atts) {
-        global $post;
-        extract(shortcode_atts(array(
-                    'ck_term' => '',
-                    'ck_sep' => ', ',
-                    'ck_before' => '',
-                    'ck_after' => ''
-                        ), $atts));
-
-        $show_the_terms = "";
-        $show_the_terms .= get_the_term_list($post->ID, "$ck_term", "$ck_before", "$ck_sep", "$ck_after");
-        return $show_the_terms;
     }
 
     /**
@@ -283,7 +279,7 @@ class advanced_content_pagination {
         $shortcode_content = $shortcode_content_array[$curr_page - 1];
         $shortcode_content = do_shortcode($shortcode_content);
         $shortcode_content = str_replace(']]>', ']]&gt;', $shortcode_content);
-        return $shortcode_content;
+        return wpautop($shortcode_content);
     }
 
     /**

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
 Tested up to: 3.9.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ How to install the plugin and get it working.
 6. APP New page creator pop-up #6
 
 == Changelog ==
+
+= 1.0.2 =
+* Fixed Bug : Empty content on post list.
+* Fixed Bug : Missed line-breaks and paragraphs in subPages.
 
 = 1.0.1 =
 * Fixed Bug : Unprocessed shortcode issue.
