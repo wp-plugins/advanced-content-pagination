@@ -51,6 +51,10 @@ How to install the plugin and get it working.
 
 == Changelog ==
 
+= 1.0.3 =
+* Fixed Bug : Pagination buttons were disappearing when another plugin shordcode is added before ACP shordcodes.
+* Fixed Bug : Whole content was disappearing when another plugin shordcode is added after ACP shordcodes.
+
 = 1.0.2 =
 * Fixed Bug : Empty content on post list.
 * Fixed Bug : Missed line-breaks and paragraphs in subPages.
