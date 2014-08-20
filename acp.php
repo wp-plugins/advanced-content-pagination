@@ -55,7 +55,7 @@ class advanced_content_pagination {
         add_action('init', array(&$this, 'add_buttons_and_ext_plugin'));
         add_action('admin_footer', array(&$this, 'add_dialog'));
 
-        add_action('admin_menu', array(&$this, 'add_plugin_options_page'));
+        add_action('admin_menu', array(&$this, 'add_plugin_options_page'), -125);
         add_action('admin_enqueue_scripts', array(&$this, 'admin_page_styles_scripts'));
         add_action('wp_enqueue_scripts', array(&$this->acp_css, 'frontend_styles'));
         add_action('wp_enqueue_scripts', array(&$this, 'front_end_styles_scripts'));
