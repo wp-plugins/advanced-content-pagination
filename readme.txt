@@ -14,16 +14,27 @@ Perfect solution for long post pagination. This plugin creates fully customizabl
 Perfect solution for long post pagination. This plugin creates fully customizable pagination buttons for posts with multiple pages.
 
 **Features:**
+
 * Two button layouts with subPage number and title.
+
 * Special icon on post/page **WYSIWYG** editior to insert manage subPages
+
 * Automaticaly turns default Wordpress <!--nextpage--> buttons to Advanced Pagination Buttons
+
 * Two types of subPage content loading: Ajax and Refresh
+
 * Fully **customizable** trough Wordpress Dashboard -> AP Pagination
 
-**Usage**
-This plugin is very easy to use. After activation just go to Edit/Add Post page.
-Then select a part of content/text you'd like to split as a new subPage and click on ACP button icon (the ACP icon "black [>]" is located next to other TinyMCE editor button icons.)
-On the popup widow you'll see a field for pagination button title, just insert a text and click on [insert] button. This wraps your selected content in ACP shortcode like this:
+
+**Usage:**
+This plugin is very easy to use. 
+
+* After activation just go to Edit/Add Post page.
+
+* Then select a part of content/text you'd like to split as a new subPage and click on ACP button icon (the ACP icon "black [>]" is located next to other TinyMCE editor button icons.)
+
+* On the popup widow you'll see a field for pagination button title, just insert a text and click on [insert] button. This wraps your selected content in ACP shortcode like this:
+
 `[nextpage title="pagination button title here"]
 subPage content here...
 [/nextpage]`
