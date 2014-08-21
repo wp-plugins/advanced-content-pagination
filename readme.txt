@@ -16,13 +16,9 @@ Perfect solution for long post pagination. This plugin creates fully customizabl
 **Features:**
 
 * Two button layouts with subPage number and title.
-
 * Special icon on post/page **WYSIWYG** editior to insert manage subPages
-
 * Automaticaly turns default Wordpress <!--nextpage--> buttons to Advanced Pagination Buttons
-
 * Two types of subPage content loading: Ajax and Refresh
-
 * Fully **customizable** trough Wordpress Dashboard -> AP Pagination
 
 
