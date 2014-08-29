@@ -15,6 +15,7 @@ Perfect solution to split a long post content to multiple pages. Allows you to p
 Perfect solution to split a long post content to multiple pages. Allows you to put text (title, description) and image in pagination buttons. 2 (free version) and 5 (pro version) fully customizable button layouts.
 
 **Features:**
+
 * | Free | Special button icon on post TinyMCE editior to split content to many pages
 * | Free | Shortcode `[nextpage title="..."]..content..[/nextpage]`
 * | Free | Automaticaly turns default <!--nextpage--> buttons to Advanced Pagination Buttons
@@ -36,9 +37,10 @@ subPage content here...
 [/nextpage]`
 * You can also add this shortcode manually without using ACP button icon and popup window.
 
-** In Dashboard **
+== In Dashboard ==
 
 Click on the "AP Pagination" menu and manage pagination settings. Here you can manage: 
+
 * Turn on/of ACP pagination buttons
 * Change pagination buttons layout and style 
 * Change content loading type (ajax, refresh)
