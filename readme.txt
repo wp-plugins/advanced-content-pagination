@@ -37,7 +37,8 @@ subPage content here...
 [/nextpage]`
 * You can also add this shortcode manually without using ACP button icon and popup window.
 
-** In Dashboard **
+
+**In Dashboard**
 
 Click on the "AP Pagination" menu and manage pagination settings. Here you can manage: 
 
@@ -47,11 +48,11 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 * Other settings...
 
 
-** Spliting a long post content to subPages **
+**Spliting a long post content to subPages**
 
 [youtube https://www.youtube.com/watch?v=Vv8qOtRkWSo /]
 
-** Managing pagination button layouts **
+**Managing pagination button layouts**
 
 [youtube https://www.youtube.com/watch?v=59UE-IyNnb0 /]
 
