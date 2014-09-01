@@ -12,17 +12,19 @@ Perfect solution to split a long post content to multiple pages. Allows you to p
 
 == Description ==
 
-Perfect solution to paginate posts and split a long post to multiple pages. Allows you to put text (title, description) and image in pagination buttons. Fully customizable pagination button layouts.
+Perfect solution to paginate posts and split a long post to multiple pages. Allows you to put text  and image in pagination buttons. 
 
-* Pagination buttons with Title text
-* Pagination buttons with Title text and Number
-* Shortcode `[nextpage title="..."]..content..[/nextpage]`
-* Ajax and simple (refresh) types of content loading on pagination
-* Adds pagination buttons carousel slider if those takes more width
-* Special button icon on post TinyMCE editior to split content to many pages
-* Ability to set pagination button locations on the post content top/bottom/both
-* Automaticaly turns default `<--nextpage-->` pagination to Advanced Buttons
-* Fully **customizable** trough Wordpress Dashboard -> AP Pagination
+**Features:**
+
+* | Pagination buttons with Title text
+* | Pagination buttons with Title text and Number
+* | Shortcode `[nextpage title="..."]..content..[/nextpage]`
+* | Ajax and simple (reloading) pagination 
+* | Adds pagination buttons slider if those takes more width
+* | Special button icon on post TinyMCE editior to split content to many pages
+* | Ability to set pagination button locations on the post content top/bottom/both
+* | Fully **customizable** trough Wordpress Dashboard -> AP Pagination
+* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab0) | Automaticaly turns default `<--nextpage-->` pagination to Advanced Buttons
 * | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab1) | Pagination buttons with subPage Title and Short Description
 * | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab2) | Pagination buttons with subPage Title and Thambnail
 * | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab3) | Pagination buttons with subPage Title, Description and Thambnail - [DEMO](http://www.gvectors.net/acp/advanced-content-pagination/)
