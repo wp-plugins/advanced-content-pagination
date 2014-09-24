@@ -8,6 +8,8 @@ class Options {
     public $acp_wp_shortcode_pagination_view; // if 1 default pagination else tabbed pagination 
     public $acp_plugin_pagination_type; // if 1 reload page else ajax
     public $acp_paging_buttons_location; //  if 1 top else if 2 bottom else both
+    public $acp_do_shortcodes_excerpts; //  do shortcodes in excerpt or not
+    public $acp_excerpts_count; //  excerpt length in words
     // PAGINATION BUTTONS STYLES
     public $acp_buttons_border_css; // pagination buttons border css
     public $acp_buttons_background_css; // pagination buttons background css
@@ -32,6 +34,8 @@ class Options {
         $this->acp_wp_shortcode_pagination_view = $options['acp_wp_shortcode_pagination_view'];
         $this->acp_plugin_pagination_type = $options['acp_plugin_pagination_type'];
         $this->acp_paging_buttons_location = $options['acp_paging_buttons_location'];
+        $this->acp_do_shortcodes_excerpts = isset($options['acp_do_shortcodes_excerpts']) ? $options['acp_do_shortcodes_excerpts'] : 2;
+        $this->acp_excerpts_count = isset($options['acp_excerpts_count']) ? $options['acp_excerpts_count'] : 55;
         $this->acp_buttons_border_css = $options['acp_buttons_border_css'];
         $this->acp_buttons_background_css = $options['acp_buttons_background_css'];
         $this->acp_buttons_background_hover_css = $options['acp_buttons_background_hover_css'];
@@ -50,6 +54,8 @@ class Options {
             'acp_wp_shortcode_pagination_view' => $this->acp_wp_shortcode_pagination_view,
             'acp_plugin_pagination_type' => $this->acp_plugin_pagination_type,
             'acp_paging_buttons_location' => $this->acp_paging_buttons_location,
+            'acp_do_shortcodes_excerpts' => $this->acp_do_shortcodes_excerpts,
+            'acp_excerpts_count' => $this->acp_excerpts_count,
             'acp_buttons_border_css' => $this->acp_buttons_border_css,
             'acp_buttons_background_css' => $this->acp_buttons_background_css,
             'acp_buttons_background_hover_css' => $this->acp_buttons_background_hover_css,
@@ -75,6 +81,8 @@ class Options {
             'acp_wp_shortcode_pagination_view' => '2', // if 1 default pagination else tabbed pagination 
             'acp_plugin_pagination_type' => '1', // if 1 reload page else ajax
             'acp_paging_buttons_location' => '3', //  if 1 top else if 2 bottom else both
+            'acp_do_shortcodes_excerpts' => '1', //  do shortcodes in excerpt or not
+            'acp_excerpts_count' => '55', //  excerpt length in words
             'acp_buttons_border_css' => '1px solid #cccccc', // pagination buttons border css
             'acp_buttons_background_css' => '#dbdbdb', // pagination buttons background css
             'acp_buttons_background_hover_css' => '#e3e3e3', // pagination buttons hover background css

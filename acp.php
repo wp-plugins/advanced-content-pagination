@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.0.3
+  Version: 1.0.4
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -39,6 +39,7 @@ class advanced_content_pagination {
     private $acp_css;
     private $shortcode_content;
     private $pattern = '|\[nextpage[^\[\]]*\](.+?)\[/nextpage\]|is';
+    private $open_pattern = '|\[nextpage[^\[\]]*\]|is';
     private $page;
     private $query_page;
     private $curr_page = 0;
@@ -78,9 +79,21 @@ class advanced_content_pagination {
      */
 
     public function do_nextpage_shortcode_in_excerpt($excerpt) {
-        return do_shortcode(wp_trim_words(get_the_content(), 55));
+        if (has_excerpt()) {
+            return $excerpt;
+        }
+        $excerpt = get_the_content();
+        $excerpt_count = $this->options->acp_excerpts_count;
+        if ($this->options->acp_do_shortcodes_excerpts == '2') {
+            return do_shortcode(wp_trim_words($excerpt, $excerpt_count));
+        } else {
+            $excerpt = preg_replace($this->open_pattern, '', $excerpt);            
+            $excerpt = str_replace('[/nextpage]', '', $excerpt);
+            $excerpt = strip_shortcodes($excerpt);
+            return wp_trim_words($excerpt, $excerpt_count);
+        }
     }
-
+    
     /**
      * Scripts and styles registration on administration pages
      */
@@ -147,7 +160,7 @@ class advanced_content_pagination {
             $this->query_page = get_query_var('page') ? get_query_var('page') : 1;
             $this->page++;
             extract(shortcode_atts(array(
-                        'title' => 'Title'
+                'title' => 'Title'
                             ), $atts), EXTR_OVERWRITE);
 
             $link;
@@ -166,9 +179,9 @@ class advanced_content_pagination {
 
             if (preg_match_all('/' . $pattern . '/s', $post->post_content, $matches) && array_key_exists(2, $matches) && in_array('nextpage', $matches[2])) {
                 $pages_count = 0;
-                foreach($matches[2] as $match){
-                    if($match == 'nextpage'){
-                       $pages_count++; 
+                foreach ($matches[2] as $match) {
+                    if ($match == 'nextpage') {
+                        $pages_count++;
                     }
                 }
             }

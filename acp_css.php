@@ -14,7 +14,7 @@ class frontend_style {
             <style type="text/css" title="d">
                 .acp_wrapper { clear: both; border-radius: 0px; } 
                 .button_style { margin: 10px 2px 10px 0!important; padding:0px; text-align: center; color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; cursor: pointer; overflow: hidden; display: inline-block;}
-                .button_style:hover { background: #CCCCCC;} 
+                .button_style:hover, .button_style:focus { background: #CCCCCC;} 
                 .button_style a { color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; text-decoration: none !important; display: block; width: 100%; height: 100%; overflow: hidden;}  
                 .acp_page_number { float: left;  font-size:16px; line-height:30px; padding: 0px 10px; background:#AAAAAA; border:1px solid #AAAAAA !important; color:#FFFFFF; font-weight:bold; font-family:<?php echo $this->options->acp_buttons_font_css ?> }   
                 .paging_btns li.nbox { width: auto !important; height: auto !important; padding: 1px; } 
@@ -31,7 +31,7 @@ class frontend_style {
                 <style type="text/css" title="2">
                     .acp_wrapper { clear: both; border-radius: 0px; } 
                     .button_style { background: <?php echo $this->options->acp_buttons_background_css; ?>; margin: 10px 2px 10px 0!important; padding:0px; text-align: center; color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; cursor: pointer; overflow: hidden; display: inline-block;} 
-                    .button_style:hover { background: <?php echo $this->options->acp_buttons_background_hover_css; ?>;} 
+                    .button_style:hover, .button_style:focus { background: <?php echo $this->options->acp_buttons_background_hover_css; ?>;} 
                     .button_style a { color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; text-decoration: none !important; display: block; width: 100%; height: 100%; overflow: hidden;} 
                     .paging_btns li.active { background: <?php echo $this->options->acp_active_button_background_css; ?> !important; color: <?php echo $this->options->acp_active_button_text_color_css; ?> !important;cursor: default;} 
                     .paging_btns li.active a { color: <?php echo $this->options->acp_active_button_text_color_css; ?> !important; cursor: default; } 
@@ -55,7 +55,7 @@ class frontend_style {
                 <style type="text/css" title="1">
                     .acp_wrapper { clear: both; border-radius: 0px; } 
                     .button_style { background: <?php echo $this->options->acp_buttons_background_css; ?>; margin: 10px 2px 10px 0!important; padding:0px; text-align: center; color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; cursor: pointer; overflow: hidden; display: inline-block;} 
-                    .button_style:hover { background: <?php echo $this->options->acp_buttons_background_hover_css; ?>;} 
+                    .button_style:hover, .button_style:focus { background: <?php echo $this->options->acp_buttons_background_hover_css; ?>;} 
                     .button_style a { color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; text-decoration: none !important; display: block; width: 100%; height: 100%; overflow: hidden;} 
                     .paging_btns li.active { background: <?php echo $this->options->acp_active_button_background_css; ?> !important; color: <?php echo $this->options->acp_active_button_text_color_css; ?> !important;cursor: default;} 
                     .paging_btns li.active a { color: <?php echo $this->options->acp_active_button_text_color_css; ?> !important; cursor: default; } .acp_page_number { float: left;  font-size:16px; line-height: 47px; padding: 0px 10px; background-color:#777777; color:#FFFFFF; font-weight:bold; font-family:<?php echo $this->options->acp_buttons_font_css ?> } 
