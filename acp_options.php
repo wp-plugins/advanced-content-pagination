@@ -62,7 +62,7 @@ class acp_options {
                 ?>
 
                 <?php
-                include 'options-layouts/promo.php';
+                include 'options_layouts/promo.php';
                 ?>
 
                 <table cellspacing="0" class="wp-list-table widefat plugins">
