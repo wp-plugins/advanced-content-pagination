@@ -40,10 +40,14 @@ class acp_options {
             $this->options->acp_buttons_font_css = $_POST['acp_buttons_font_css'];
             $this->options->acp_buttons_text_color_css = $_POST['acp_buttons_text_color_css'];
             $this->options->acp_buttons_title_size_css = $_POST['acp_buttons_title_size_css'];
+            $this->options->acp_buttons_prev_next = isset($_POST['acp_buttons_prev_next']) ? $_POST['acp_buttons_prev_next'] : 0;
             $this->options->acp_buttons_visual_style = $_POST['acp_buttons_visual_style'];
+            $this->options->acp_buttons_hover_text_color = isset($_POST['acp_buttons_hover_text_color']) ? $_POST['acp_buttons_hover_text_color'] : '#000000' ;
+            $this->options->acp_buttons_is_arrow_fixed = isset($_POST['acp_buttons_is_arrow_fixed']) ? $_POST['acp_buttons_is_arrow_fixed'] : '0' ;
             $this->options->acp_active_button_border_css = $_POST['acp_active_button_border_css'];
             $this->options->acp_active_button_background_css = $_POST['acp_active_button_background_css'];
             $this->options->acp_active_button_text_color_css = $_POST['acp_active_button_text_color_css'];
+            $this->options->acp_load_container_css = isset($_POST['acp_load_container_css']) ? $_POST['acp_load_container_css'] : 'rgba(174,174,174,0.7)';
             
             
 

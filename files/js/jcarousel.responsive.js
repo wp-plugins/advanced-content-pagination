@@ -21,7 +21,7 @@
 
             if (!isNumeric) {
                 if (width < 500) {
-                    width = width / 2;
+                    width = (width / 2) - 2;
                 }
                 else if (width >= 500 && width <= 750) {
                     width = width / 3;

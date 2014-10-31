@@ -91,6 +91,28 @@
         </div>
     </td>
 </tr>
+<tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
+    <th scope="row">
+        <label for="acp_buttons_hover_text_color">Button Hover Text Color: </label>
+    </th>
+    <td>
+        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_hover_text_color; ?>" id="acp_buttons_hover_text_color" name="acp_buttons_hover_text_color" placeholder="<?php _e('Example: #000000', 'ac_paging'); ?>"/>
+    </td>
+    <td class="picker_img_cell">
+        <a href="#openModal6">
+            <img class="colorpicker_img6" src="<?php echo plugins_url('advanced-content-pagination/files/img/colorpicker_icon_22.png'); ?>" />
+        </a>
+    </td>
+    <td class="color_picker">
+        <div id="openModal6" class="modalDialog">
+            <div id="box6">
+                <a href="#close" title="Close" class="close">X</a>
+                <h2>Color Picker</h2>
+                <p id="colorpickerHolder6"></p>
+            </div>
+        </div>
+    </td>
+</tr>
 
 <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0">
     <th scope="row">
@@ -111,5 +133,16 @@
             <option value="19px" <?php selected($acp_btns_text_size, '19px'); ?>>19px</option>
             <option value="20px" <?php selected($acp_btns_text_size, '20px'); ?>>20px</option>
         </select>
+    </td>
+</tr>
+
+<tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
+    <th scope="row">
+        Carousel Buttons Arrows Fixed Position:
+    </th>
+    <td colspan="3">                                
+        <label for="acp_buttons_is_arrow_fixed">
+            <input type="checkbox" <?php checked($this->options->acp_buttons_is_arrow_fixed == 1) ?> value="<?php echo $this->options->acp_buttons_is_arrow_fixed; ?>" name="acp_buttons_is_arrow_fixed" id="acp_buttons_is_arrow_fixed" />
+        </label>
     </td>
 </tr>

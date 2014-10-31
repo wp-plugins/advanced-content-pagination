@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {    
     
-    jQuery('ul:not(.acp_wp_default_ajax) li.button_style').click(function($) {
+    jQuery('ul:not(.acp_wp_default_ajax) li.button_style').live('click', function($){
         
         var clickedItemId = jQuery(this).attr('id');        
         

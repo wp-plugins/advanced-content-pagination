@@ -17,11 +17,17 @@ class Options {
     public $acp_buttons_font_css; // pagination buttons font css
     public $acp_buttons_text_color_css; // pagination buttons text color css
     public $acp_buttons_title_size_css; // pagination buttons text size css from 10px to 20px
+    public $acp_buttons_prev_next; // if checked display only prev next buttons
     public $acp_buttons_visual_style; // pagination buttons visual style
+    public $acp_buttons_hover_text_color; // default - black
+    public $acp_buttons_is_arrow_fixed; // if checked jcarousel buttons arrows are fixed else float
     // PAGINATION ACTIVE BUTTON STYLES
     public $acp_active_button_border_css; // pagination active button border css
     public $acp_active_button_background_css; // pagination active button background css        
     public $acp_active_button_text_color_css; // pagination active button text color css
+    
+    // LOADER CONTAINER STYLES 
+    public $acp_load_container_css;
 
     function __construct() {
         $this->addOptions();
@@ -42,10 +48,14 @@ class Options {
         $this->acp_buttons_font_css = $options['acp_buttons_font_css'];
         $this->acp_buttons_text_color_css = $options['acp_buttons_text_color_css'];
         $this->acp_buttons_title_size_css = $options['acp_buttons_title_size_css'];
+        $this->acp_buttons_prev_next = $options['acp_buttons_prev_next'];
         $this->acp_buttons_visual_style = $options['acp_buttons_visual_style'];
+        $this->acp_buttons_hover_text_color = $options['acp_buttons_hover_text_color'];
+        $this->acp_buttons_is_arrow_fixed = $options['acp_buttons_is_arrow_fixed'];
         $this->acp_active_button_border_css = $options['acp_active_button_border_css'];
         $this->acp_active_button_background_css = $options['acp_active_button_background_css'];
         $this->acp_active_button_text_color_css = $options['acp_active_button_text_color_css'];
+        $this->acp_load_container_css = $options['acp_load_container_css'];
     }
 
     public function toArray() {
@@ -62,10 +72,14 @@ class Options {
             'acp_buttons_font_css' => $this->acp_buttons_font_css,
             'acp_buttons_text_color_css' => $this->acp_buttons_text_color_css,
             'acp_buttons_title_size_css' => $this->acp_buttons_title_size_css,
+            'acp_buttons_prev_next' => $this->acp_buttons_prev_next,
             'acp_buttons_visual_style' => $this->acp_buttons_visual_style,
+            'acp_buttons_hover_text_color' => $this->acp_buttons_hover_text_color,
+            'acp_buttons_is_arrow_fixed' => $this->acp_buttons_is_arrow_fixed,
             'acp_active_button_border_css' => $this->acp_active_button_border_css,
             'acp_active_button_background_css' => $this->acp_active_button_background_css,
-            'acp_active_button_text_color_css' => $this->acp_active_button_text_color_css
+            'acp_active_button_text_color_css' => $this->acp_active_button_text_color_css,
+            'acp_load_container_css' => $this->acp_load_container_css
         );
 
         return $options;
@@ -89,11 +103,15 @@ class Options {
             'acp_buttons_font_css' => 'arial', // pagination buttons font css
             'acp_buttons_text_color_css' => '#333333', // pagination buttons text color css
             'acp_buttons_title_size_css' => '13px', // pagination buttons text size css from 10px to 20px 
+            'acp_buttons_prev_next' => '0', 
             'acp_buttons_visual_style' => '1', // pagination buttons visual style
+            'acp_buttons_hover_text_color' => '#000000', // pagination buttons visual style
+            'acp_buttons_is_arrow_fixed' => '0',
             // PAGINATION ACTIVE BUTTON STYLES
             'acp_active_button_border_css' => '1px solid #cccccc', // pagination active button border css
             'acp_active_button_background_css' => '#ffffff', // pagination active button background css        
-            'acp_active_button_text_color_css' => '#333333'
+            'acp_active_button_text_color_css' => '#333333',
+            'acp_load_container_css' => 'rgba(174,174,174,0.7)'
         );
         add_option($this->acp_option_slug, serialize($options));
     }

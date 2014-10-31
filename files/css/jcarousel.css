@@ -71,14 +71,6 @@
     background: rgba(78,68,60,1.0);
 }
 
-.jcarousel-control-prev {
-    left: -35px;
-}
-
-.jcarousel-control-next {
-    right: -35px;
-}
-
 /** Carousel Pagination **/
 
 .jcarousel-pagination {

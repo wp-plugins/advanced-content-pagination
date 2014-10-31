@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.0.5
+  Version: 1.1.0
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -45,6 +45,7 @@ class advanced_content_pagination {
     private $curr_page = 0;
     private $loading_type;
     private $html_text;
+    private $shorcodes_array = array();
 
     public function __construct() {
         $this->acp_options = new acp_options();
@@ -87,13 +88,13 @@ class advanced_content_pagination {
         if ($this->options->acp_do_shortcodes_excerpts == '2') {
             return do_shortcode(wp_trim_words($excerpt, $excerpt_count));
         } else {
-            $excerpt = preg_replace($this->open_pattern, '', $excerpt);            
+            $excerpt = preg_replace($this->open_pattern, '', $excerpt);
             $excerpt = str_replace('[/nextpage]', '', $excerpt);
             $excerpt = strip_shortcodes($excerpt);
             return wp_trim_words($excerpt, $excerpt_count);
         }
     }
-    
+
     /**
      * Scripts and styles registration on administration pages
      */
@@ -128,12 +129,23 @@ class advanced_content_pagination {
             wp_enqueue_script('acp-ajax-js', plugins_url('advanced-content-pagination/files/js/acp-ajax.js'), array('jquery'), '1.0.0', false);
             wp_localize_script('jquery', 'acp_ajax_obj', array('url' => admin_url('admin-ajax.php')));
         }
-        wp_register_style('jcarousel-style', plugins_url('advanced-content-pagination/files/css/jcarousel_style.css'));
-        wp_enqueue_style('jcarousel-style');
-        wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
-        wp_enqueue_style('jcarousel');
-        wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
-        wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+
+        if (!$this->options->acp_buttons_prev_next) {
+            wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
+            wp_enqueue_style('jcarousel');
+            wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
+            if ($this->options->acp_buttons_is_arrow_fixed) {
+                wp_enqueue_script('jcarousel-js-fixed', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
+            } else {
+                wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+            }
+        } else {
+            wp_register_style('prev-next-layout-css', plugins_url('advanced-content-pagination/files/css/prev-next-layout-css.css'));
+            wp_enqueue_style('prev-next-layout-css');
+            if ($this->loading_type === 2) {
+                wp_enqueue_script('prev-next-layout-js', plugins_url('advanced-content-pagination/files/js/prev-next-layout-js.js'), array('jquery'), '1.0.0', false);
+            }
+        }
     }
 
     /**
@@ -160,7 +172,7 @@ class advanced_content_pagination {
             $this->query_page = get_query_var('page') ? get_query_var('page') : 1;
             $this->page++;
             extract(shortcode_atts(array(
-                'title' => 'Title'
+                        'title' => 'Title'
                             ), $atts), EXTR_OVERWRITE);
 
             $link;
@@ -185,7 +197,7 @@ class advanced_content_pagination {
                     }
                 }
             }
-            $html;
+            $html = '';
             $active_item = '';
 
             if ($this->curr_page === $this->query_page - 1) {
@@ -193,13 +205,25 @@ class advanced_content_pagination {
                 $active_item = ' active';
                 $link = '';
             }
-
-            if ($pages_count == 1) {
-                $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
+            if (!$this->options->acp_buttons_prev_next) {
+                if ($pages_count == 1) {
+                    $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
+                } else {
+                    $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($this->shortcode_content));
+                }
             } else {
-                $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($this->shortcode_content));
-            }
+                $this->shorcodes_array[] = array(
+                    'title' => $title,
+                    'shortcode_content' => ($pages_count == 1) ? $content : $this->shortcode_content,
+                    'curr_page' => $this->curr_page,
+                    'url_page_number' => $this->page,
+                    'link' => $link
+                );
 
+                if ($pages_count === count($this->shorcodes_array)) {
+                    $html = $this->build_prev_next_pagination_html($this->shorcodes_array);
+                }
+            }
             $this->curr_page++;
             return $html;
         } else {
@@ -258,6 +282,68 @@ class advanced_content_pagination {
             // ================================================================================================== 
             else { // Buttons with page number only
                 include 'buttons_layouts/ajax_load/button_layout_3_js.php';
+            }
+        }
+        return $html;
+    }
+
+    private function build_prev_next_pagination_html($shortcodes_array) {
+        $html = '';
+        $btn_visual_style = intval($this->options->acp_buttons_visual_style);
+        $acp_wp_shortcode_pagination_view = intval($this->options->acp_wp_shortcode_pagination_view);
+        $acp_paging_buttons_location = intval($this->options->acp_paging_buttons_location);
+
+        if ($acp_wp_shortcode_pagination_view === 1) {
+            $btn_visual_style = -1;
+        }
+
+        // check pagination loading type if 1 reload page else type = AJAX loading
+        if ($this->loading_type === 1) {
+
+
+            $current_query_page = $this->query_page - 1;
+
+            if ($current_query_page == 0) {
+                $prev = count($shortcodes_array) - 1;
+                $next = 1;
+            } else if ($current_query_page == count($shortcodes_array) - 1) {
+                $prev = count($shortcodes_array) - 2;
+                $next = 0;
+            } else {
+                $prev = $current_query_page - 1;
+                $next = $current_query_page + 1;
+            }
+
+            $prev_shortcode_array = $shortcodes_array[$prev];
+            $next_shortcode_array = $shortcodes_array[$next];
+            $current_shortcode_array = $shortcodes_array[$current_query_page];
+
+            // ================================================================================================== 
+            if ($btn_visual_style === 1) { 
+                include 'buttons_layouts/page_reload/prev_next/button_layout_1.php';
+            }
+            // ================================================================================================== 
+            else if ($btn_visual_style === 2) { 
+                include 'buttons_layouts/page_reload/prev_next/button_layout_2.php';
+            }
+            // ==================================================================================================  
+            else { 
+                include 'buttons_layouts/page_reload/prev_next/button_layout_3.php';
+            }
+        }
+        // =============================== Pagination HTML for AJAX ==================================== 
+        else {
+            // ================================================================================================== 
+            if ($btn_visual_style === 1) { 
+                include 'buttons_layouts/ajax_load/prev_next/button_layout_1_js.php';
+            }
+            // ================================================================================================== 
+            else if ($btn_visual_style === 2) {
+                include 'buttons_layouts/ajax_load/prev_next/button_layout_2_js.php';
+            }
+            // ================================================================================================== 
+            else { 
+                include 'buttons_layouts/ajax_load/prev_next/button_layout_3_js.php';
             }
         }
         return $html;

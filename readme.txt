@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
 Tested up to: 4.0
-Stable tag: 1.0.5
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ Perfect solution to paginate posts and split a long post to multiple pages. Allo
 * | Shortcode `[nextpage title="..."]..content..[/nextpage]`
 * | Ajax and simple (reloading) pagination 
 * | Adds pagination buttons slider if those takes more width
+* | Pagination buttons with only next previous and next subPage buttons
 * | Special button icon on post TinyMCE editior to split content to many pages
 * | Ability to set pagination button locations on the post content top/bottom/both
 * | Fully **customizable** trough Wordpress Dashboard -> AP Pagination
@@ -47,6 +48,7 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 * Turn on/of ACP pagination buttons
 * Change pagination buttons layout and style 
 * Change pagination buttons location (top/bottom/both)
+* Make pagination carousel’s navigation buttons fixed
 * Change content loading type (ajax, refresh)
 * Other settings...
 
@@ -83,6 +85,12 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 6. APP New page creator pop-up #6
 
 == Changelog ==
+
+= 1.1.0 =
+* Added : Pagination buttons with only next previous and next subPage buttons
+* Added : Option to make pagination carousel’s navigation buttons fixed
+* Added : Option to set Ajax loader background color
+* Added : Option to set pagination buttons test and hover colors
 
 = 1.0.5 =
 * Fixed Bug : Promo layout warning issue
