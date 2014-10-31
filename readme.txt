@@ -48,7 +48,7 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 * Turn on/of ACP pagination buttons
 * Change pagination buttons layout and style 
 * Change pagination buttons location (top/bottom/both)
-* Make pagination carousel’s navigation buttons fixed
+* Make pagination carousel's navigation buttons fixed
 * Change content loading type (ajax, refresh)
 * Other settings...
 
@@ -88,7 +88,7 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 = 1.1.0 =
 * Added : Pagination buttons with only next previous and next subPage buttons
-* Added : Option to make pagination carousel’s navigation buttons fixed
+* Added : Option to make pagination carousel's navigation buttons fixed
 * Added : Option to set Ajax loader background color
 * Added : Option to set pagination buttons test and hover colors
 
