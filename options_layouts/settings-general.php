@@ -7,7 +7,7 @@
     </th>
     <td colspan="3">                                
         <label for="acp_paging_on_off">
-            <input type="checkbox" <?php checked($this->options->acp_paging_on_off == 1) ?> value="<?php echo $this->options->acp_paging_on_off; ?>" name="acp_paging_on_off" id="acp_paging_on_off" />
+            <input type="checkbox" <?php checked($this->acp_options_serialized->acp_paging_on_off == 1) ?> value="<?php echo $this->acp_options_serialized->acp_paging_on_off; ?>" name="acp_paging_on_off" id="acp_paging_on_off" />
         </label>
     </td>
 </tr>
@@ -17,7 +17,7 @@
     <td colspan="3">
         <fieldset>
             <?php
-            $acp_def_shortcode = $this->options->acp_wp_shortcode_pagination_view;
+            $acp_def_shortcode = $this->acp_options_serialized->acp_wp_shortcode_pagination_view;
             ?>
             <a href="../acp_options.php"></a>
             <label title="default">
@@ -38,7 +38,7 @@
     <td colspan="3">
         <fieldset>
             <?php
-            $acp_plug_shortcode = $this->options->acp_plugin_pagination_type;
+            $acp_plug_shortcode = $this->acp_options_serialized->acp_plugin_pagination_type;
             ?>
             <label title="reload page">
                 <input type="radio" value="1" <?php checked('1' == $acp_plug_shortcode); ?> name="acp_plugin_pagination_type" /> 
@@ -57,7 +57,7 @@
     <td colspan="3">
         <fieldset>
             <?php
-            $acp_pag_buttons_loc = $this->options->acp_paging_buttons_location;
+            $acp_pag_buttons_loc = $this->acp_options_serialized->acp_paging_buttons_location;
             ?>
             <label title="top">
                 <input type="radio" value="1" <?php checked('1' == $acp_pag_buttons_loc); ?>  name="acp_paging_buttons_location" /> 
@@ -80,7 +80,7 @@
     <td colspan="3">
         <fieldset>
             <?php
-            $acp_do_shortcodes_excerpts = $this->options->acp_do_shortcodes_excerpts;
+            $acp_do_shortcodes_excerpts = $this->acp_options_serialized->acp_do_shortcodes_excerpts;
             ?>
             <label title="top">
                 <input type="checkbox" value="<?php echo $acp_do_shortcodes_excerpts; ?>" <?php checked('2' == $acp_do_shortcodes_excerpts); ?>  name="acp_do_shortcodes_excerpts" id="acp_do_shortcodes_excerpts" />
@@ -94,7 +94,7 @@
     <td colspan="3">
         <fieldset>
             <?php
-            $acp_excerpts_count = $this->options->acp_excerpts_count;
+            $acp_excerpts_count = $this->acp_options_serialized->acp_excerpts_count;
             ?>
             <label title="top">
                 <input type="text" value="<?php echo $acp_excerpts_count; ?>" name="acp_excerpts_count" id="acp_excerpts_count"/>                 

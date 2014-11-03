@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.1.0
+  Version: 1.1.1
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -32,10 +32,10 @@ define('PPACP_PATH', WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__)) . 
 include_once 'acp_css.php';
 include_once 'acp_options.php';
 
-class advanced_content_pagination {
+class ACP_Core {
 
     private $acp_options;
-    private $options;
+    private $acp_options_serialized;
     private $acp_css;
     private $shortcode_content;
     private $pattern = '|\[nextpage[^\[\]]*\](.+?)\[/nextpage\]|is';
@@ -48,11 +48,11 @@ class advanced_content_pagination {
     private $shorcodes_array = array();
 
     public function __construct() {
-        $this->acp_options = new acp_options();
-        $this->options = $this->acp_options->get_default_options();
-        $this->acp_css = new frontend_style($this->options);
+        $this->acp_options = new ACP_Options();
+        $this->acp_options_serialized = $this->acp_options->get_default_options();
+        $this->acp_css = new ACP_Frontend_Style($this->acp_options_serialized);
 
-        $this->loading_type = intval($this->options->acp_plugin_pagination_type);
+        $this->loading_type = intval($this->acp_options_serialized->acp_plugin_pagination_type);
 
         add_action('init', array(&$this, 'add_buttons_and_ext_plugin'));
         add_action('admin_footer', array(&$this, 'add_dialog'));
@@ -68,7 +68,7 @@ class advanced_content_pagination {
             add_action('wp_ajax_nopriv_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
         }
 
-        if (intval($this->options->acp_paging_on_off) === 1) {
+        if (intval($this->acp_options_serialized->acp_paging_on_off) === 1) {
             if (function_exists('add_shortcode')) {
                 add_shortcode('nextpage', array(&$this, 'nextpage_shortcode'));
             }
@@ -84,8 +84,8 @@ class advanced_content_pagination {
             return $excerpt;
         }
         $excerpt = get_the_content();
-        $excerpt_count = $this->options->acp_excerpts_count;
-        if ($this->options->acp_do_shortcodes_excerpts == '2') {
+        $excerpt_count = $this->acp_options_serialized->acp_excerpts_count;
+        if ($this->acp_options_serialized->acp_do_shortcodes_excerpts == '2') {
             return do_shortcode(wp_trim_words($excerpt, $excerpt_count));
         } else {
             $excerpt = preg_replace($this->open_pattern, '', $excerpt);
@@ -130,11 +130,11 @@ class advanced_content_pagination {
             wp_localize_script('jquery', 'acp_ajax_obj', array('url' => admin_url('admin-ajax.php')));
         }
 
-        if (!$this->options->acp_buttons_prev_next) {
+        if (!$this->acp_options_serialized->acp_buttons_prev_next) {
             wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
             wp_enqueue_style('jcarousel');
             wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
-            if ($this->options->acp_buttons_is_arrow_fixed) {
+            if ($this->acp_options_serialized->acp_buttons_is_arrow_fixed) {
                 wp_enqueue_script('jcarousel-js-fixed', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
             } else {
                 wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
@@ -205,7 +205,7 @@ class advanced_content_pagination {
                 $active_item = ' active';
                 $link = '';
             }
-            if (!$this->options->acp_buttons_prev_next) {
+            if (!$this->acp_options_serialized->acp_buttons_prev_next) {
                 if ($pages_count == 1) {
                     $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
                 } else {
@@ -244,10 +244,10 @@ class advanced_content_pagination {
     private function build_pagination_html($curr_page, $pages_count, $active_item, $page, $link, $title, $shortcode_content) {
         $html = '';
 
-        $btn_visual_style = intval($this->options->acp_buttons_visual_style);
-        $acp_wp_shortcode_pagination_view = intval($this->options->acp_wp_shortcode_pagination_view);
+        $btn_visual_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+        $acp_wp_shortcode_pagination_view = intval($this->acp_options_serialized->acp_wp_shortcode_pagination_view);
 
-        $acp_paging_buttons_location = intval($this->options->acp_paging_buttons_location);
+        $acp_paging_buttons_location = intval($this->acp_options_serialized->acp_paging_buttons_location);
 
 
         if ($acp_wp_shortcode_pagination_view === 1) {
@@ -289,9 +289,9 @@ class advanced_content_pagination {
 
     private function build_prev_next_pagination_html($shortcodes_array) {
         $html = '';
-        $btn_visual_style = intval($this->options->acp_buttons_visual_style);
-        $acp_wp_shortcode_pagination_view = intval($this->options->acp_wp_shortcode_pagination_view);
-        $acp_paging_buttons_location = intval($this->options->acp_paging_buttons_location);
+        $btn_visual_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+        $acp_wp_shortcode_pagination_view = intval($this->acp_options_serialized->acp_wp_shortcode_pagination_view);
+        $acp_paging_buttons_location = intval($this->acp_options_serialized->acp_paging_buttons_location);
 
         if ($acp_wp_shortcode_pagination_view === 1) {
             $btn_visual_style = -1;
@@ -390,7 +390,7 @@ class advanced_content_pagination {
      * register editor plugin javascript if current user can edit posts      
      */
     function add_buttons_and_ext_plugin() {
-        if ($this->options->acp_paging_on_off && $this->options->acp_wp_shortcode_pagination_view == 2) {
+        if ($this->acp_options_serialized->acp_paging_on_off && $this->acp_options_serialized->acp_wp_shortcode_pagination_view == 2) {
             if (!current_user_can('edit_posts') && !current_user_can('edit_pages')) {
                 return;
             }
@@ -458,7 +458,7 @@ class advanced_content_pagination {
      */
     function add_dialog() {
         // the layout with title and paging number
-        $button_style_2 = $this->options->acp_buttons_visual_style == 2;
+        $button_style_2 = $this->acp_options_serialized->acp_buttons_visual_style == 2;
         ?>
         <style>#TB_window{ background:#F0F0F0}</style>
 
@@ -496,9 +496,9 @@ class advanced_content_pagination {
                         <style type="text/css">
 
                             .acp_button_layout {
-                                border: <?php echo $this->options->acp_buttons_border_css; ?>;
-                                background: <?php echo $this->options->acp_buttons_background_css; ?>;
-                                color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important;
+                                border: <?php echo $this->acp_options_serialized->acp_buttons_border_css; ?>;
+                                background: <?php echo $this->acp_options_serialized->acp_buttons_background_css; ?>;
+                                color: <?php echo $this->acp_options_serialized->acp_buttons_text_color_css; ?> !important;
                                 margin: 25px auto;
                                 width: 200px;
                                 text-align: center;
@@ -520,7 +520,7 @@ class advanced_content_pagination {
                             }
 
                             .acp_button_title {
-                                font-size: <?php echo $this->options->acp_buttons_title_size_css; ?>;
+                                font-size: <?php echo $this->acp_options_serialized->acp_buttons_title_size_css; ?>;
                                 overflow: hidden;
                             }
 
@@ -547,5 +547,5 @@ class advanced_content_pagination {
 
 }
 
-$wp_acp = new advanced_content_pagination();
+new ACP_Core();
 ?>

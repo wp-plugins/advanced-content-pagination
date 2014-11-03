@@ -1,6 +1,6 @@
 <?php
 
-class Options {
+class ACP_Options_Serialized {
 
     private $acp_option_slug = 'acp_options';
     // GENERAL SETTINGS

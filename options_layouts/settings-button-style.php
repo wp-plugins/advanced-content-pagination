@@ -7,7 +7,7 @@
         <label for="acp_buttons_border_css">Button Border CSS:</label>
     </th>
     <td colspan="3">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_border_css; ?>" id="acp_buttons_border_css" name="acp_buttons_border_css" placeholder="<?php _e('Example: 1px solid #ff0000', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_border_css; ?>" id="acp_buttons_border_css" name="acp_buttons_border_css" placeholder="<?php _e('Example: 1px solid #ff0000', 'ac_paging'); ?>"/>
     </td>
 </tr>
 
@@ -16,7 +16,7 @@
         <label for="acp_buttons_background_css">Button Background Color: </label>
     </th>
     <td class="picker_input_cell">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_background_css; ?>" id="acp_buttons_background_css" name="acp_buttons_background_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_background_css; ?>" id="acp_buttons_background_css" name="acp_buttons_background_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
     </td>
 
     <td class="picker_img_cell">
@@ -40,7 +40,7 @@
         <label for="acp_buttons_background_hover_css">Button Hover Background Color: </label>
     </th>
     <td>
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_background_hover_css; ?>" id="acp_buttons_background_hover_css" name="acp_buttons_background_hover_css" placeholder="<?php _e('Example: #00ff00', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_background_hover_css; ?>" id="acp_buttons_background_hover_css" name="acp_buttons_background_hover_css" placeholder="<?php _e('Example: #00ff00', 'ac_paging'); ?>"/>
     </td>
 
     <td class="picker_img_cell">
@@ -64,7 +64,7 @@
         <label for="acp_buttons_font_css">Button Text Font:  </label>
     </th>
     <td colspan="3">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_font_css; ?>" id="acp_buttons_font_css" name="acp_buttons_font_css" placeholder="<?php _e('Example: Times New Roman, Times, serif', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_font_css; ?>" id="acp_buttons_font_css" name="acp_buttons_font_css" placeholder="<?php _e('Example: Times New Roman, Times, serif', 'ac_paging'); ?>"/>
     </td>
 </tr>
 
@@ -73,7 +73,7 @@
         <label for="acp_buttons_text_color_css">Button Text Color: </label>
     </th>
     <td>
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_text_color_css; ?>" id="acp_buttons_text_color_css" name="acp_buttons_text_color_css" placeholder="<?php _e('Example: #f0000f', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_text_color_css; ?>" id="acp_buttons_text_color_css" name="acp_buttons_text_color_css" placeholder="<?php _e('Example: #f0000f', 'ac_paging'); ?>"/>
     </td>
 
     <td class="picker_img_cell">
@@ -96,7 +96,7 @@
         <label for="acp_buttons_hover_text_color">Button Hover Text Color: </label>
     </th>
     <td>
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_buttons_hover_text_color; ?>" id="acp_buttons_hover_text_color" name="acp_buttons_hover_text_color" placeholder="<?php _e('Example: #000000', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_buttons_hover_text_color; ?>" id="acp_buttons_hover_text_color" name="acp_buttons_hover_text_color" placeholder="<?php _e('Example: #000000', 'ac_paging'); ?>"/>
     </td>
     <td class="picker_img_cell">
         <a href="#openModal6">
@@ -120,7 +120,7 @@
     </th>
     <td colspan="3">
         <select id="acp_buttons_title_size_css" name="acp_buttons_title_size_css">
-            <?php $acp_btns_text_size = $this->options->acp_buttons_title_size_css; ?>
+            <?php $acp_btns_text_size = $this->acp_options_serialized->acp_buttons_title_size_css; ?>
             <option value="10px" <?php selected($acp_btns_text_size, '10px'); ?>>10px</option>
             <option value="11px" <?php selected($acp_btns_text_size, '11px'); ?>>11px</option>
             <option value="12px" <?php selected($acp_btns_text_size, '12px'); ?>>12px</option>
@@ -142,7 +142,7 @@
     </th>
     <td colspan="3">                                
         <label for="acp_buttons_is_arrow_fixed">
-            <input type="checkbox" <?php checked($this->options->acp_buttons_is_arrow_fixed == 1) ?> value="<?php echo $this->options->acp_buttons_is_arrow_fixed; ?>" name="acp_buttons_is_arrow_fixed" id="acp_buttons_is_arrow_fixed" />
+            <input type="checkbox" <?php checked($this->acp_options_serialized->acp_buttons_is_arrow_fixed == 1) ?> value="<?php echo $this->acp_options_serialized->acp_buttons_is_arrow_fixed; ?>" name="acp_buttons_is_arrow_fixed" id="acp_buttons_is_arrow_fixed" />
         </label>
     </td>
 </tr>

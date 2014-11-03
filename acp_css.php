@@ -1,6 +1,6 @@
 <?php
 
-class frontend_style {
+class ACP_Frontend_Style {
 
     public $options;
 

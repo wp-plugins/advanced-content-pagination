@@ -7,7 +7,7 @@
         <label for="acp_active_button_border_css">Active Button Border CSS:</label>
     </th>
     <td colspan="3">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_active_button_border_css; ?>" id="acp_active_button_border_css" name="acp_active_button_border_css" placeholder="<?php _e('Example: 1px solid #ff0000', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_active_button_border_css; ?>" id="acp_active_button_border_css" name="acp_active_button_border_css" placeholder="<?php _e('Example: 1px solid #ff0000', 'ac_paging'); ?>"/>
     </td>
 </tr>
 
@@ -16,7 +16,7 @@
         <label for="acp_active_button_background_css">Active Button Background Color: </label>
     </th>
     <td class="picker_input_cell">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_active_button_background_css; ?>" id="acp_active_button_background_css" name="acp_active_button_background_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_active_button_background_css; ?>" id="acp_active_button_background_css" name="acp_active_button_background_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
     </td>
 
     <td class="picker_img_cell">
@@ -40,7 +40,7 @@
         <label for="acp_active_button_text_color_css">Active Button Text Color: </label>
     </th>
     <td class="picker_input_cell">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_active_button_text_color_css; ?>" id="acp_active_button_text_color_css" name="acp_active_button_text_color_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_active_button_text_color_css; ?>" id="acp_active_button_text_color_css" name="acp_active_button_text_color_css" placeholder="<?php _e('Example: #0000ff', 'ac_paging'); ?>"/>
     </td>
 
     <td class="picker_img_cell">
@@ -63,7 +63,7 @@
         <label for="acp_load_container_css">Loading Background Color: </label>
     </th>
     <td class="picker_input_cell">
-        <input type="text" class="regular-text" value="<?php echo $this->options->acp_load_container_css; ?>" id="acp_load_container_css" name="acp_load_container_css" placeholder="<?php _e('Example: #cccccc', 'ac_paging'); ?>"/>
+        <input type="text" class="regular-text" value="<?php echo $this->acp_options_serialized->acp_load_container_css; ?>" id="acp_load_container_css" name="acp_load_container_css" placeholder="<?php _e('Example: #cccccc', 'ac_paging'); ?>"/>
     </td>
     <td class="picker_img_cell">
         <a href="#openModal7">

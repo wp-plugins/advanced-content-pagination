@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
 Tested up to: 4.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed Bug: Class name conflict fix
+
 = 1.1.0 =
 * Added : Pagination buttons with only next previous and next subPage buttons
 * Added : Option to make pagination carousel's navigation buttons fixed
@@ -110,4 +113,4 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 * Fixed Bug : Unprocessed shortcode issue.
 
 = 1.0.0 =
-Initial version
+* Initial version
