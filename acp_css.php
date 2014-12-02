@@ -22,16 +22,18 @@ class ACP_Frontend_Style {
         <?php if ($this->options->acp_wp_shortcode_pagination_view == 1) {
             ?>
             <style type="text/css">
-                .acp_wrapper { clear: both;
-                              border-radius: 0px;
+                .acp_wrapper { 
+                    clear: both;
+                    border-radius: 0px;
                 } 
-                .button_style { margin: 10px 2px 10px 0!important;
-                               padding:0px; 
-                               text-align: center; 
-                               color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important;
-                               cursor: pointer; 
-                               overflow: hidden; 
-                               display: inline-block;
+                .button_style { 
+                    margin: 10px 2px 10px 0!important;
+                    padding:0px; 
+                    text-align: center; 
+                    color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important;
+                    cursor: pointer; 
+                    overflow: hidden; 
+                    display: inline-block;
                 }
                 .button_style:hover,
                 .button_style:focus {
@@ -268,7 +270,7 @@ class ACP_Frontend_Style {
                         float: left; 
                         width: 100%;
                     } 
-                    
+
                 </style>
                 <?php
             endif;

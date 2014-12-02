@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.1.1
+  Version: 1.1.2
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -25,8 +25,6 @@ if (!defined('WP_PLUGIN_DIR'))
 
 define('PPACP_FOLDER', dirname(__FILE__) . '/');
 define('PPACP_PATH', WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__)) . '/');
-
-
 
 
 include_once 'acp_css.php';

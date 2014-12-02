@@ -31,8 +31,8 @@ class ACP_Options {
             $this->acp_options_serialized->acp_paging_on_off = $_POST['acp_paging_on_off'];
             $this->acp_options_serialized->acp_wp_shortcode_pagination_view = $_POST['acp_wp_shortcode_pagination_view'];
             $this->acp_options_serialized->acp_plugin_pagination_type = $_POST['acp_plugin_pagination_type'];
-            $this->acp_options_serialized->acp_paging_buttons_location = $_POST['acp_paging_buttons_location'];            
-            $this->acp_options_serialized->acp_do_shortcodes_excerpts = isset($_POST['acp_do_shortcodes_excerpts']) ?  $_POST['acp_do_shortcodes_excerpts'] : 1;
+            $this->acp_options_serialized->acp_paging_buttons_location = $_POST['acp_paging_buttons_location'];
+            $this->acp_options_serialized->acp_do_shortcodes_excerpts = isset($_POST['acp_do_shortcodes_excerpts']) ? $_POST['acp_do_shortcodes_excerpts'] : 1;
             $this->acp_options_serialized->acp_excerpts_count = isset($_POST['acp_excerpts_count']) ? $_POST['acp_excerpts_count'] : 55;
             $this->acp_options_serialized->acp_buttons_border_css = $_POST['acp_buttons_border_css'];
             $this->acp_options_serialized->acp_buttons_background_css = $_POST['acp_buttons_background_css'];
@@ -42,14 +42,14 @@ class ACP_Options {
             $this->acp_options_serialized->acp_buttons_title_size_css = $_POST['acp_buttons_title_size_css'];
             $this->acp_options_serialized->acp_buttons_prev_next = isset($_POST['acp_buttons_prev_next']) ? $_POST['acp_buttons_prev_next'] : 0;
             $this->acp_options_serialized->acp_buttons_visual_style = $_POST['acp_buttons_visual_style'];
-            $this->acp_options_serialized->acp_buttons_hover_text_color = isset($_POST['acp_buttons_hover_text_color']) ? $_POST['acp_buttons_hover_text_color'] : '#000000' ;
-            $this->acp_options_serialized->acp_buttons_is_arrow_fixed = isset($_POST['acp_buttons_is_arrow_fixed']) ? $_POST['acp_buttons_is_arrow_fixed'] : '0' ;
+            $this->acp_options_serialized->acp_buttons_hover_text_color = isset($_POST['acp_buttons_hover_text_color']) ? $_POST['acp_buttons_hover_text_color'] : '#000000';
+            $this->acp_options_serialized->acp_buttons_is_arrow_fixed = isset($_POST['acp_buttons_is_arrow_fixed']) ? $_POST['acp_buttons_is_arrow_fixed'] : '0';
             $this->acp_options_serialized->acp_active_button_border_css = $_POST['acp_active_button_border_css'];
             $this->acp_options_serialized->acp_active_button_background_css = $_POST['acp_active_button_background_css'];
             $this->acp_options_serialized->acp_active_button_text_color_css = $_POST['acp_active_button_text_color_css'];
             $this->acp_options_serialized->acp_load_container_css = isset($_POST['acp_load_container_css']) ? $_POST['acp_load_container_css'] : 'rgba(174,174,174,0.7)';
-            
-            
+
+
 
             $this->acp_options_serialized->updateOptions();
         }
@@ -57,8 +57,8 @@ class ACP_Options {
         <div class="wrap">
 
             <div style="float:left; width:34px; height:34px; margin:10px 10px 20px 0px;"><img src="<?php echo plugins_url('advanced-content-pagination/files/img/acp.gif'); ?>" style="width:34px;"/></div><h2><?php _e('Advanced Content Pagination Settings', 'ac_paging'); ?></h2>
-            <br style="clear:both" />
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>?page=acp_options&updated=true" method="post" name="acp_options">
+            <br style="clear:both" />            
+            <form action="<?php echo admin_url(); ?>admin.php?page=acp_options&updated=true" method="post" name="acp_options">
                 <?php
                 if (function_exists('wp_nonce_field')) {
                     wp_nonce_field('acp_options_form');

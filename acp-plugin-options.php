@@ -16,8 +16,8 @@ class ACP_Options_Serialized {
     public $acp_buttons_background_hover_css; // pagination buttons hover background css
     public $acp_buttons_font_css; // pagination buttons font css
     public $acp_buttons_text_color_css; // pagination buttons text color css
-    public $acp_buttons_title_size_css; // pagination buttons text size css from 10px to 20px
-    public $acp_buttons_prev_next; // if checked display only prev next buttons
+    public $acp_buttons_title_size_css; // pagination buttons text size css from 10px to 20px  
+    public $acp_buttons_prev_next; // if checked display only prev next buttons    
     public $acp_buttons_visual_style; // pagination buttons visual style
     public $acp_buttons_hover_text_color; // default - black
     public $acp_buttons_is_arrow_fixed; // if checked jcarousel buttons arrows are fixed else float
@@ -47,8 +47,8 @@ class ACP_Options_Serialized {
         $this->acp_buttons_background_hover_css = $options['acp_buttons_background_hover_css'];
         $this->acp_buttons_font_css = $options['acp_buttons_font_css'];
         $this->acp_buttons_text_color_css = $options['acp_buttons_text_color_css'];
-        $this->acp_buttons_title_size_css = $options['acp_buttons_title_size_css'];
-        $this->acp_buttons_prev_next = $options['acp_buttons_prev_next'];
+        $this->acp_buttons_title_size_css = $options['acp_buttons_title_size_css'];       
+        $this->acp_buttons_prev_next = isset($options['acp_buttons_prev_next']) ? $options['acp_buttons_prev_next'] : 0;        
         $this->acp_buttons_visual_style = $options['acp_buttons_visual_style'];
         $this->acp_buttons_hover_text_color = $options['acp_buttons_hover_text_color'];
         $this->acp_buttons_is_arrow_fixed = $options['acp_buttons_is_arrow_fixed'];
@@ -71,8 +71,8 @@ class ACP_Options_Serialized {
             'acp_buttons_background_hover_css' => $this->acp_buttons_background_hover_css,
             'acp_buttons_font_css' => $this->acp_buttons_font_css,
             'acp_buttons_text_color_css' => $this->acp_buttons_text_color_css,
-            'acp_buttons_title_size_css' => $this->acp_buttons_title_size_css,
-            'acp_buttons_prev_next' => $this->acp_buttons_prev_next,
+            'acp_buttons_title_size_css' => $this->acp_buttons_title_size_css,            
+            'acp_buttons_prev_next' => $this->acp_buttons_prev_next,            
             'acp_buttons_visual_style' => $this->acp_buttons_visual_style,
             'acp_buttons_hover_text_color' => $this->acp_buttons_hover_text_color,
             'acp_buttons_is_arrow_fixed' => $this->acp_buttons_is_arrow_fixed,
@@ -102,8 +102,8 @@ class ACP_Options_Serialized {
             'acp_buttons_background_hover_css' => '#e3e3e3', // pagination buttons hover background css
             'acp_buttons_font_css' => 'arial', // pagination buttons font css
             'acp_buttons_text_color_css' => '#333333', // pagination buttons text color css
-            'acp_buttons_title_size_css' => '13px', // pagination buttons text size css from 10px to 20px 
-            'acp_buttons_prev_next' => '0', 
+            'acp_buttons_title_size_css' => '13px', // pagination buttons text size css from 10px to 20px             
+            'acp_buttons_prev_next' => '0', // displays only prev/next buttons            
             'acp_buttons_visual_style' => '1', // pagination buttons visual style
             'acp_buttons_hover_text_color' => '#000000', // pagination buttons visual style
             'acp_buttons_is_arrow_fixed' => '0',
