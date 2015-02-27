@@ -77,27 +77,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-    if ($('#acp_paging_on_off').val() == 1) {
-        $(this).attr('checked', true);
-    }
-
-    $('#acp_paging_on_off').change(function() {
-        if ($(this).is(':checked')) {
-            $(this).val('1');
-        } else {
-            $(this).val('0');
-        }
-    });
-
-    $('#acp_default_paging_on_off').change(function() {
-        if ($(this).is(':checked')) {
-            $(this).val('1');
-        } else {
-            $(this).val('0');
-        }
-    });
-
-
     if ($('#shortcode_default').is(':checked')) {
         $('.paging_btn_layout').hide();
     } else {
@@ -109,30 +88,6 @@ jQuery(document).ready(function($) {
             $('.paging_btn_layout').hide();
         } else {
             $('.paging_btn_layout').show();
-        }
-    });
-
-    $('#acp_do_shortcodes_excerpts').change(function() {
-        if ($(this).is(':checked')) {
-            $(this).val('2');
-        } else {
-            $(this).val('1');
-        }
-    });
-    
-      $('#acp_buttons_prev_next').change(function () {
-        if ($(this).is(':checked')) {
-            $(this).val('1');
-        } else {
-            $(this).val('0');
-        }
-    });
-    
-     $('#acp_buttons_is_arrow_fixed').change(function () {
-        if ($(this).is(':checked')) {
-            $(this).val('1');
-        } else {
-            $(this).val('0');
         }
     });
 });

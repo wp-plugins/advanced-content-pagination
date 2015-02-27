@@ -3,17 +3,17 @@
 </tr>
 <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
     <th scope="row">
-        Turn on/off Content Pagination
+      <?php _e('Turn on/off Content Pagination','ac_paging');?> 
     </th>
     <td colspan="3">                                
         <label for="acp_paging_on_off">
-            <input type="checkbox" <?php checked($this->acp_options_serialized->acp_paging_on_off == 1) ?> value="<?php echo $this->acp_options_serialized->acp_paging_on_off; ?>" name="acp_paging_on_off" id="acp_paging_on_off" />
+            <input type="checkbox" <?php checked($this->acp_options_serialized->acp_paging_on_off == 1) ?> value="1" name="acp_paging_on_off" id="acp_paging_on_off" />
         </label>
     </td>
 </tr>
 
 <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
-    <th scope="row">Pagnation Buttons Layout</th>
+    <th scope="row"><?php _e('Pagnation Buttons Layout','ac_paging');?></th>
     <td colspan="3">
         <fieldset>
             <?php
@@ -22,11 +22,11 @@
             <a href="../acp_options.php"></a>
             <label title="default">
                 <input type="radio" value="1" <?php checked('1' == $acp_def_shortcode); ?> name="acp_wp_shortcode_pagination_view" id="shortcode_default" /> 
-                <span>Default</span>
+                <span><?php _e('Default','ac_paging');?></span>
             </label><br>
             <label title="tabbed">
                 <input type="radio" value="2" <?php checked('2' == $acp_def_shortcode); ?> name="acp_wp_shortcode_pagination_view" id="shortcode_tabbed" /> 
-                <span>Tabbed</span>
+                <span><?php _e('Tabbed','ac_paging');?></span>
             </label><br>                                    
         </fieldset>
     </td>
@@ -34,7 +34,7 @@
 
 
 <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
-    <th scope="row">Pagnation Loading Type</th>
+    <th scope="row"><?php _e('Pagnation Loading Type','ac_paging');?></th>
     <td colspan="3">
         <fieldset>
             <?php
@@ -42,18 +42,18 @@
             ?>
             <label title="reload page">
                 <input type="radio" value="1" <?php checked('1' == $acp_plug_shortcode); ?> name="acp_plugin_pagination_type" /> 
-                <span>Reload Page</span>
+                <span><?php _e('Reload Page','ac_paging');?></span>
             </label><br>
             <label title="ajax">
                 <input type="radio" value="2" <?php checked('2' == $acp_plug_shortcode); ?> name="acp_plugin_pagination_type" /> 
-                <span>Ajax</span>
+                <span><?php _e('Ajax','ac_paging');?></span>
             </label><br>                                    
         </fieldset>
     </td>
 </tr>
 
 <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
-    <th scope="row">Pagination Button Location:</th>
+    <th scope="row"><?php _e('Pagination Button Location','ac_paging');?>:</th>
     <td colspan="3">
         <fieldset>
             <?php
@@ -61,36 +61,36 @@
             ?>
             <label title="top">
                 <input type="radio" value="1" <?php checked('1' == $acp_pag_buttons_loc); ?>  name="acp_paging_buttons_location" /> 
-                <span>Top</span>
+                <span><?php _e('Top','ac_paging');?></span>
             </label><br>
             <label title="bottom">
                 <input type="radio" value="2" <?php checked('2' == $acp_pag_buttons_loc); ?> name="acp_paging_buttons_location" /> 
-                <span>Bottom</span>
+                <span><?php _e('Bottom','ac_paging');?></span>
             </label><br>
             <label title="both">
                 <input type="radio" value="3" <?php checked('3' == $acp_pag_buttons_loc); ?> name="acp_paging_buttons_location" /> 
-                <span>Both</span>
+                <span><?php _e('Both','ac_paging');?></span>
             </label><br>
         </fieldset>
     </td>
 </tr>
 
 <tr>
-    <th scope="row"><?php _e('Do Shortcodes In Excerpts') ?>:</th>
+    <th scope="row"><?php _e('Do Shortcodes In Excerpts','ac_paging'); ?>:</th>
     <td colspan="3">
         <fieldset>
             <?php
             $acp_do_shortcodes_excerpts = $this->acp_options_serialized->acp_do_shortcodes_excerpts;
             ?>
             <label title="top">
-                <input type="checkbox" value="<?php echo $acp_do_shortcodes_excerpts; ?>" <?php checked('2' == $acp_do_shortcodes_excerpts); ?>  name="acp_do_shortcodes_excerpts" id="acp_do_shortcodes_excerpts" />
+                <input type="checkbox" value="2" <?php checked('2' == $acp_do_shortcodes_excerpts); ?>  name="acp_do_shortcodes_excerpts" id="acp_do_shortcodes_excerpts" />
             </label><br>
         </fieldset>
     </td>
 </tr>
 
 <tr>
-    <th scope="row"><?php _e('Excerpt Words Count') ?>:</th>
+    <th scope="row"><?php _e('Excerpt Words Count','ac_paging'); ?>:</th>
     <td colspan="3">
         <fieldset>
             <?php

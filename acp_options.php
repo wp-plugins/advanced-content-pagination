@@ -28,7 +28,7 @@ class ACP_Options {
                 check_admin_referer('acp_options_form');
             }
 
-            $this->acp_options_serialized->acp_paging_on_off = $_POST['acp_paging_on_off'];
+            $this->acp_options_serialized->acp_paging_on_off = isset($_POST['acp_paging_on_off']) ? $_POST['acp_paging_on_off'] : 0;
             $this->acp_options_serialized->acp_wp_shortcode_pagination_view = $_POST['acp_wp_shortcode_pagination_view'];
             $this->acp_options_serialized->acp_plugin_pagination_type = $_POST['acp_plugin_pagination_type'];
             $this->acp_options_serialized->acp_paging_buttons_location = $_POST['acp_paging_buttons_location'];
@@ -57,7 +57,7 @@ class ACP_Options {
         <div class="wrap">
 
             <div style="float:left; width:34px; height:34px; margin:10px 10px 20px 0px;"><img src="<?php echo plugins_url('advanced-content-pagination/files/img/acp.gif'); ?>" style="width:34px;"/></div><h2><?php _e('Advanced Content Pagination Settings', 'ac_paging'); ?></h2>
-            <br style="clear:both" />            
+            <br style="clear:both" />           
             <form action="<?php echo admin_url(); ?>admin.php?page=acp_options&updated=true" method="post" name="acp_options">
                 <?php
                 if (function_exists('wp_nonce_field')) {
@@ -67,8 +67,7 @@ class ACP_Options {
 
                 <?php
                 include 'options_layouts/promo.php';
-                ?>
-
+                ?> 
                 <table cellspacing="0" class="wp-list-table widefat plugins">
                     <thead>
                         <tr>
@@ -92,7 +91,7 @@ class ACP_Options {
                         <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
                             <td colspan="4">
                                 <p class="submit">
-                                    <input type="submit" class="button button-primary" name="submit" value="<?php _e('Save Changes') ?>" />
+                                    <input type="submit" class="button button-primary" name="submit" value="<?php _e('Save Changes', 'ac_paging'); ?>" />
                                 </p>
                             </td>
                         </tr>

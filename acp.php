@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.1.2
+  Version: 1.3.0
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -46,6 +46,7 @@ class ACP_Core {
     private $shorcodes_array = array();
 
     public function __construct() {
+        add_action('plugins_loaded', array(&$this, 'load_acp_text_domain'));
         $this->acp_options = new ACP_Options();
         $this->acp_options_serialized = $this->acp_options->get_default_options();
         $this->acp_css = new ACP_Frontend_Style($this->acp_options_serialized);
@@ -61,16 +62,85 @@ class ACP_Core {
         add_action('wp_enqueue_scripts', array(&$this, 'front_end_styles_scripts'));
         add_filter('the_excerpt', array(&$this, 'do_nextpage_shortcode_in_excerpt'));
 
-        if ($this->loading_type === 2) {
-            add_action('wp_ajax_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
-            add_action('wp_ajax_nopriv_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
-        }
+        add_action('add_meta_boxes', array($this, 'add_acp_meta_box'));
+        add_action('save_post', array($this, 'save_acp_metadata'));
 
+        add_action('wp_ajax_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
+        add_action('wp_ajax_nopriv_pp_with_ajax', array(&$this, 'pagination_with_ajax'));
+
+        $plugin = plugin_basename(__FILE__);
+        add_filter("plugin_action_links_$plugin", array(&$this, 'acp_add_plugin_settings_link'));
+        
         if (intval($this->acp_options_serialized->acp_paging_on_off) === 1) {
             if (function_exists('add_shortcode')) {
                 add_shortcode('nextpage', array(&$this, 'nextpage_shortcode'));
             }
         }
+    }
+
+    public function load_acp_text_domain() {
+        load_plugin_textdomain('ac_paging', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
+    
+    /**
+     * Adds a box to the main column on the Post and Page edit screens.
+     */
+    public function add_acp_meta_box($post_type) {
+        $post_types = apply_filters('acp_metabox_post_types', array('post', 'page'));
+        if (in_array($post_type, $post_types)) {
+            add_meta_box(
+                    'some_meta_box_name'
+                    , __('ACP Settings', 'ac_paging')
+                    , array($this, 'render_acp_meta_box_content')
+                    , $post_type
+                    , 'side'
+                    , 'high'
+            );
+        }
+    }
+
+    /**
+     * Prints the meta box content.
+     */
+    public function render_acp_meta_box_content($post) {
+
+        wp_nonce_field('acp_inner_custom_box', 'acp_inner_custom_box_nonce');
+
+        $acp_loading_type = esc_attr(get_post_meta($post->ID, '_acp_loading_type', true));
+        $acp_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+
+        $this->acp_loading_type_metabox_html($acp_loading_type);
+        $this->acp_button_style_metabox_html($acp_button_style);
+    }
+
+    /**
+     * When the post is saved, saves our custom data.
+     */
+    public function save_acp_metadata($post_id) {
+
+        if (!isset($_POST['acp_inner_custom_box_nonce']))
+            return $post_id;
+
+        $nonce = $_POST['acp_inner_custom_box_nonce'];
+
+        if (!wp_verify_nonce($nonce, 'acp_inner_custom_box'))
+            return $post_id;
+
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+            return $post_id;
+
+        if ('page' == $_POST['post_type']) {
+
+            if (!current_user_can('edit_page', $post_id))
+                return $post_id;
+        } else {
+            if (!current_user_can('edit_post', $post_id))
+                return $post_id;
+        }
+        $acp_button_style = sanitize_text_field($_POST['acp_button_style']);
+        update_post_meta($post_id, '_acp_button_style', $acp_button_style);
+        $acp_loading_type = sanitize_text_field($_POST['acp_loading_type']);
+        update_post_meta($post_id, '_acp_loading_type', $acp_loading_type);
     }
 
     /*
@@ -122,26 +192,40 @@ class ACP_Core {
      * Styles and scripts registration to use on front page
      */
     public function front_end_styles_scripts() {
-        wp_enqueue_script('front-end-scripts-js', plugins_url('advanced-content-pagination/files/js/front-end-scripts.js'), array('jquery'), '1.0.0', false);
-        if ($this->loading_type === 2) {
-            wp_enqueue_script('acp-ajax-js', plugins_url('advanced-content-pagination/files/js/acp-ajax.js'), array('jquery'), '1.0.0', false);
-            wp_localize_script('jquery', 'acp_ajax_obj', array('url' => admin_url('admin-ajax.php')));
-        }
-
-        if (!$this->acp_options_serialized->acp_buttons_prev_next) {
-            wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
-            wp_enqueue_style('jcarousel');
-            wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
-            if ($this->acp_options_serialized->acp_buttons_is_arrow_fixed) {
-                wp_enqueue_script('jcarousel-js-fixed', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
-            } else {
-                wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+        if (is_singular()) {
+            global $post;
+            $loading_type = esc_attr(get_post_meta($post->ID, '_acp_loading_type', true));
+            if ($loading_type) {
+                $this->loading_type = intval($loading_type);
             }
-        } else {
-            wp_register_style('prev-next-layout-css', plugins_url('advanced-content-pagination/files/css/prev-next-layout-css.css'));
-            wp_enqueue_style('prev-next-layout-css');
+
+            $btn_visual_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+            $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+            if ($current_post_button_style) {
+                $btn_visual_style = intval($current_post_button_style);
+            }
+
+            wp_enqueue_script('front-end-scripts-js', plugins_url('advanced-content-pagination/files/js/front-end-scripts.js'), array('jquery'), '1.0.0', false);
             if ($this->loading_type === 2) {
-                wp_enqueue_script('prev-next-layout-js', plugins_url('advanced-content-pagination/files/js/prev-next-layout-js.js'), array('jquery'), '1.0.0', false);
+                wp_enqueue_script('acp-ajax-js', plugins_url('advanced-content-pagination/files/js/acp-ajax.js'), array('jquery'), '1.0.0', false);
+                wp_localize_script('jquery', 'acp_ajax_obj', array('url' => admin_url('admin-ajax.php')));
+            }
+
+            if ($this->acp_options_serialized->acp_buttons_prev_next || $btn_visual_style === 4) {
+                wp_register_style('prev-next-layout-css', plugins_url('advanced-content-pagination/files/css/prev-next-layout-css.css'));
+                wp_enqueue_style('prev-next-layout-css');
+                if ($this->loading_type === 2) {
+                    wp_enqueue_script('prev-next-layout-js', plugins_url('advanced-content-pagination/files/js/prev-next-layout-js.js'), array('jquery'), '1.0.0', false);
+                }
+            } else {
+                wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
+                wp_enqueue_style('jcarousel');
+                wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
+                if ($this->acp_options_serialized->acp_buttons_is_arrow_fixed) {
+                    wp_enqueue_script('jcarousel-js-fixed', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
+                } else {
+                    wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+                }
             }
         }
     }
@@ -151,7 +235,7 @@ class ACP_Core {
      */
     public function add_plugin_options_page() {
         if (function_exists('add_options_page')) {
-            add_menu_page('AP Pagination', 'AP Pagination', 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url('advanced-content-pagination/files/img/web_site.png'), 100);
+            add_menu_page(__('AP Pagination','ac_paging'), __('AP Pagination','ac_paging'), 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url('advanced-content-pagination/files/img/web_site.png'), 100);
         }
     }
 
@@ -166,11 +250,20 @@ class ACP_Core {
 
         if (is_singular()) {
             global $post;
+            $loading_type = esc_attr(get_post_meta($post->ID, '_acp_loading_type', true));
+            if ($loading_type) {
+                $this->loading_type = intval($loading_type);
+            }
+            $btn_visual_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+            $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+            if ($current_post_button_style) {
+                $btn_visual_style = intval($current_post_button_style);
+            }
             $pages_count;
             $this->query_page = get_query_var('page') ? get_query_var('page') : 1;
             $this->page++;
             extract(shortcode_atts(array(
-                        'title' => 'Title'
+                'title' => __('Title','ac_paging')
                             ), $atts), EXTR_OVERWRITE);
 
             $link;
@@ -203,13 +296,7 @@ class ACP_Core {
                 $active_item = ' active';
                 $link = '';
             }
-            if (!$this->acp_options_serialized->acp_buttons_prev_next) {
-                if ($pages_count == 1) {
-                    $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
-                } else {
-                    $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($this->shortcode_content));
-                }
-            } else {
+            if ($btn_visual_style === 4) {
                 $this->shorcodes_array[] = array(
                     'title' => $title,
                     'shortcode_content' => ($pages_count == 1) ? $content : $this->shortcode_content,
@@ -217,9 +304,28 @@ class ACP_Core {
                     'url_page_number' => $this->page,
                     'link' => $link
                 );
-
                 if ($pages_count === count($this->shorcodes_array)) {
-                    $html = $this->build_prev_next_pagination_html($this->shorcodes_array);
+                    $html = $this->build_only_prev_next_pagination_html($this->shorcodes_array, $this->loading_type);
+                }
+            } else {
+                if (!$this->acp_options_serialized->acp_buttons_prev_next) {
+                    if ($pages_count == 1) {
+                        $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($content));
+                    } else {
+                        $html = $this->build_pagination_html($this->curr_page, $pages_count, $active_item, $this->page, $link, trim($title), do_shortcode($this->shortcode_content));
+                    }
+                } else {
+                    $this->shorcodes_array[] = array(
+                        'title' => $title,
+                        'shortcode_content' => ($pages_count == 1) ? $content : $this->shortcode_content,
+                        'curr_page' => $this->curr_page,
+                        'url_page_number' => $this->page,
+                        'link' => $link
+                    );
+
+                    if ($pages_count === count($this->shorcodes_array)) {
+                        $html = $this->build_prev_next_pagination_html($this->shorcodes_array);
+                    }
                 }
             }
             $this->curr_page++;
@@ -241,8 +347,16 @@ class ACP_Core {
      */
     private function build_pagination_html($curr_page, $pages_count, $active_item, $page, $link, $title, $shortcode_content) {
         $html = '';
-
+        global $post;
+        $loading_type = esc_attr(get_post_meta($post->ID, '_acp_loading_type', true));
+        if ($loading_type) {
+            $this->loading_type = intval($loading_type);
+        }
         $btn_visual_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+        $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+        if ($current_post_button_style) {
+            $btn_visual_style = intval($current_post_button_style);
+        }
         $acp_wp_shortcode_pagination_view = intval($this->acp_options_serialized->acp_wp_shortcode_pagination_view);
 
         $acp_paging_buttons_location = intval($this->acp_options_serialized->acp_paging_buttons_location);
@@ -291,6 +405,16 @@ class ACP_Core {
         $acp_wp_shortcode_pagination_view = intval($this->acp_options_serialized->acp_wp_shortcode_pagination_view);
         $acp_paging_buttons_location = intval($this->acp_options_serialized->acp_paging_buttons_location);
 
+        global $post;
+        $loading_type = esc_attr(get_post_meta($post->ID, '_acp_loading_type', true));
+        if ($loading_type) {
+            $this->loading_type = intval($loading_type);
+        }
+        $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+        if ($current_post_button_style) {
+            $btn_visual_style = intval($current_post_button_style);
+        }
+
         if ($acp_wp_shortcode_pagination_view === 1) {
             $btn_visual_style = -1;
         }
@@ -317,22 +441,22 @@ class ACP_Core {
             $current_shortcode_array = $shortcodes_array[$current_query_page];
 
             // ================================================================================================== 
-            if ($btn_visual_style === 1) { 
+            if ($btn_visual_style === 1) {
                 include 'buttons_layouts/page_reload/prev_next/button_layout_1.php';
             }
             // ================================================================================================== 
-            else if ($btn_visual_style === 2) { 
+            else if ($btn_visual_style === 2) {
                 include 'buttons_layouts/page_reload/prev_next/button_layout_2.php';
             }
             // ==================================================================================================  
-            else { 
+            else {
                 include 'buttons_layouts/page_reload/prev_next/button_layout_3.php';
             }
         }
         // =============================== Pagination HTML for AJAX ==================================== 
         else {
             // ================================================================================================== 
-            if ($btn_visual_style === 1) { 
+            if ($btn_visual_style === 1) {
                 include 'buttons_layouts/ajax_load/prev_next/button_layout_1_js.php';
             }
             // ================================================================================================== 
@@ -340,10 +464,38 @@ class ACP_Core {
                 include 'buttons_layouts/ajax_load/prev_next/button_layout_2_js.php';
             }
             // ================================================================================================== 
-            else { 
+            else {
                 include 'buttons_layouts/ajax_load/prev_next/button_layout_3_js.php';
             }
         }
+        return $html;
+    }
+
+    public function build_only_prev_next_pagination_html($shortcodes_array, $loading_type) {
+        $html = '';
+        $acp_paging_buttons_location = intval($this->acp_options_serialized->acp_paging_buttons_location);
+
+        if ($loading_type === 1) {
+            $current_query_page = $this->query_page - 1;
+            if ($current_query_page == 0) {
+                $prev = count($shortcodes_array) - 1;
+                $next = 1;
+            } else if ($current_query_page == count($shortcodes_array) - 1) {
+                $prev = count($shortcodes_array) - 2;
+                $next = 0;
+            } else {
+                $prev = $current_query_page - 1;
+                $next = $current_query_page + 1;
+            }
+
+            $prev_shortcode_array = $shortcodes_array[$prev];
+            $next_shortcode_array = $shortcodes_array[$next];
+            $current_shortcode_array = $shortcodes_array[$current_query_page];
+            include 'buttons_layouts/page_reload/button_layout_4.php';
+        } else {
+            include 'buttons_layouts/ajax_load/button_layout_4_js.php';
+        }
+
         return $html;
     }
 
@@ -351,17 +503,16 @@ class ACP_Core {
      * load shortcode content via ajax
      */
     public function pagination_with_ajax() {
-        $acp_pid = $_POST['acp_pid'];
-        $acp_currpage = $_POST['acp_currpage'];
-        $acp_shortcode = $_POST['acp_shortcode'];
-        $response;
-        if ($acp_shortcode == 'acp_shortcode') {
-            // advanced pagination shortcode
-            $response = $this->acp_pagination_ajax($acp_pid, $acp_currpage);
-        } else {
-            $response = 'No Content';
+        $response = __('No Content','ac_paging');
+        if (isset($_POST['acp_pid']) && !empty($_POST['acp_pid'])) {
+            $acp_pid = $_POST['acp_pid'];
+            $acp_currpage = $_POST['acp_currpage'];
+            $acp_shortcode = $_POST['acp_shortcode'];
+            if ($acp_shortcode == 'acp_shortcode') {
+                // advanced pagination shortcode
+                $response = $this->acp_pagination_ajax($acp_pid, $acp_currpage);
+            }
         }
-
         echo $response;
         exit;
     }
@@ -462,32 +613,32 @@ class ACP_Core {
 
         <div id="acp_dialog" style="display:none;">
             <div class="shortcode_dialog" style="padding:0px 20px 20px 20px;">    
-                <h2 style="font-weight:normal; padding-bottom:10px;"><?php _e('Pagination Button Components'); ?> </h2>
+                <h2 style="font-weight:normal; padding-bottom:10px;"><?php _e('Pagination Button Components','ac_paging'); ?> </h2>
 
                 <div class="acp_title_wrap">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td style="width:160px; vertical-align:top; padding-top:5px;"><label class="shortcode_title" for="shortcode_title" style="font-size:13px; font-weight:bold;color:#333333"><?php _e('Button Title:'); ?></label></td>
+                            <td style="width:160px; vertical-align:top; padding-top:5px;"><label class="shortcode_title" for="shortcode_title" style="font-size:13px; font-weight:bold;color:#333333"><?php _e('Button Title:','ac_paging'); ?></label></td>
                             <td>
                                 <input id="shortcode_title" class="shortcode_title" type="text"  style="border:#cccccc 1px solid; padding:3px 3px; width:350px; font-size:16px;" maxlength="100" />
                                 <br />
-                                <span style="font-size:12px; font-style:italic; color:#555555; cursor:help;"><?php _e('maximum characters'); ?> 
+                                <span style="font-size:12px; font-style:italic; color:#555555; cursor:help;"><?php _e('maximum characters','ac_paging'); ?> 
                                     <span title="Pagination Button Layout #1 with image title and description">L1:15</span> , 
                                     <span title="Pagination Button Layout #2 with title and description">L2:24</span> , 
                                     <span title="Pagination Button Layouts #3, #4 and #5">L3,L4,L5:43</span>
                                 </span>
-                                <div class="error_msg"><span class="required_field"><?php _e('The title is required field!'); ?></span></div></td>
+                                <div class="error_msg"><span class="required_field"><?php _e('The title is required field!','ac_paging'); ?></span></div></td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="submit_container" style="text-align:right; padding-right:50px; display:block; padding-top:15px;">
-                    <button id="insert_shorcode" class="insert_shortcode button button-primary button-large"><?php _e('Insert Page'); ?></button>
+                    <button id="insert_shorcode" class="insert_shortcode button button-primary button-large"><?php _e('Insert Page','ac_paging'); ?></button>
                 </div>
 
                 <div class="button_layout_wrapper">
                     <div style="margin:10px auto; font-size: 15px; font-weight: bold; text-align: center">
-                        Current button layout on website
+                        <?php _e('Current button layout on website','ac_paging');?>
                     </div>
 
                     <div class="acp_button_layout">                    
@@ -543,6 +694,56 @@ class ACP_Core {
         <?php
     }
 
+    /**
+     * generate html loading type metabox
+     */
+    private function acp_loading_type_metabox_html($acp_loading_type) {
+        $loading_types = array(array('id' => 'acp_loading_type_reload', 'label' => __('Reload Page', 'ac_paging'), 'value' => '1'),
+            array('id' => 'acp_loading_type_ajax', 'label' => __('Ajax', 'ac_paging'), 'value' => '2'));
+
+        if (empty($acp_loading_type)) {
+            $acp_loading_type = $this->loading_type;
+        }
+
+        $meta_html = '<h4>' . __('Page Loading Type', 'ac_paging') . '</h4>';
+        foreach ($loading_types as $loading_type) {
+            $checked = ($loading_type['value'] == $acp_loading_type) ? 'checked="checked"' : '';
+            $meta_html.= '<input id="' . $loading_type['id'] . '" type="radio" value="' . $loading_type['value'] . '" ' . $checked . ' name="acp_loading_type" />';
+            $meta_html.= '<label for="' . $loading_type['id'] . '">' . $loading_type['label'] . '</label>&nbsp;&nbsp;&nbsp;';
+        }
+
+        echo $meta_html;
+    }
+
+    /**
+     * generate html button  style metabox
+     */
+    private function acp_button_style_metabox_html($acp_button_style) {
+        $button_styles = array(array('id' => 'acp_button_style_title', 'label' => __('Title', 'ac_paging'), 'value' => '1'),
+            array('id' => 'acp_button_style_title_number', 'label' => __('Title & Number', 'ac_paging'), 'value' => '2'),
+            array('id' => 'acp_button_style_next_prev', 'label' => __('Previous & Next', 'ac_paging'), 'value' => '4'));
+
+        if (empty($acp_button_style)) {
+            $acp_button_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
+        }
+
+        $meta_html = '<h4>' . __('Pagination Button Layout', 'ac_paging') . '</h4>';
+        foreach ($button_styles as $button_style) {
+            $checked = ($button_style['value'] == $acp_button_style) ? 'checked="checked"' : '';
+            $meta_html.= '<input id="' . $button_style['id'] . '" type="radio" value="' . $button_style['value'] . '" ' . $checked . ' name="acp_button_style" />';
+            $meta_html.= '<label for="' . $button_style['id'] . '">' . $button_style['label'] . '</label><br/>';
+        }
+
+        echo $meta_html;
+    }
+    
+    // Add settings link on plugin page
+    public function acp_add_plugin_settings_link($links){
+        $settings_link = '<a href="' . admin_url() . 'admin.php?page=acp_options">' . __('Settings', 'default') . '</a>';
+        array_unshift($links, $settings_link);
+        return $links;
+    }
+    
 }
 
 new ACP_Core();

@@ -3,8 +3,8 @@ Contributors: gVectors Team
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UAM3E699GTZ64
 Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
-Tested up to: 4.1
-Stable tag: 1.1.2
+Tested up to: 4.1.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,17 +18,18 @@ Perfect solution to paginate posts and split a long post to multiple pages. Allo
 
 * | Pagination buttons with Title text
 * | Pagination buttons with Title text and Number
+* | Pagination buttons with only Previous/Next buttons
 * | Shortcode `[nextpage title="..."]..content..[/nextpage]`
 * | Ajax and simple (reloading) pagination 
 * | Adds pagination buttons slider if those takes more width
-* | Pagination buttons with only next previous and next subPage buttons
-* | Special button icon on post TinyMCE editior to split content to many pages
+* | Special button icon on post TinyMCE editor to split content to many pages
+* | Ability to set different button layout and content loading type per post/page
 * | Ability to set pagination button locations on the post content top/bottom/both
 * | Fully **customizable** trough Wordpress Dashboard -> AP Pagination
-* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab0) | Automaticaly turns default `<--nextpage-->` pagination to Advanced Buttons
+* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab0) | Automatically turns default `<--nextpage-->` pagination to Advanced Buttons
 * | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab1) | Pagination buttons with subPage Title and Short Description
-* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab2) | Pagination buttons with subPage Title and Thambnail
-* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab3) | Pagination buttons with subPage Title, Description and Thambnail - [DEMO](http://www.gvectors.net/acp/advanced-content-pagination/)
+* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab2) | Pagination buttons with subPage Title and Thumbnail
+* | [Pro](http://www.gvectors.com/advanced-content-pagination/#tab3) | Pagination buttons with subPage Title, Description and Thumbnail - [DEMO](http://www.gvectors.net/acp/advanced-content-pagination/)
 
 **Usage:**
 
@@ -79,12 +80,18 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 1. APP on Front-End Screenshot #1
 2. APP Buttons Screenshot #2
-3. APP on Front-End Screenshot #3
-4. APP Ajax Loading #4
-5. APP on Back-end Screenshot #5
-6. APP New page creator pop-up #6
+3. APP Prev/Next Buttons Screenshot #3
+4. APP on Front-End Screenshot #4
+5. APP Ajax Loading #5
+6. APP on Back-end Screenshot #6
+7. APP New page creator pop-up #7
 
 == Changelog ==
+
+= 1.3.0 =
+* Added : Pagination buttons with only Previous/Next buttons
+* Added : Ability to set different button layout and content loading type per post/page
+
 = 1.1.2 =
 * Fixed Bug: Options page redirection issue when multisite
 
