@@ -1,5 +1,5 @@
 <?php
-include_once 'acp-plugin-options.php';
+include_once 'acp-options-serialized.php';
 
 class ACP_Options {
 
@@ -21,7 +21,7 @@ class ACP_Options {
         if (isset($_POST['submit'])) {
 
             if (function_exists('current_user_can') && !current_user_can('manage_options')) {
-                die(_e('Hacker?', 'ac_paging'));
+                die(_e('Hacker?', ACP_Core::$TEXT_DOMAIN));
             }
 
             if (function_exists('check_admin_referer')) {
@@ -48,6 +48,7 @@ class ACP_Options {
             $this->acp_options_serialized->acp_active_button_background_css = $_POST['acp_active_button_background_css'];
             $this->acp_options_serialized->acp_active_button_text_color_css = $_POST['acp_active_button_text_color_css'];
             $this->acp_options_serialized->acp_load_container_css = isset($_POST['acp_load_container_css']) ? $_POST['acp_load_container_css'] : 'rgba(174,174,174,0.7)';
+            $this->acp_options_serialized->acp_custom_css = isset($_POST['acp_custom_css']) ? $_POST['acp_custom_css'] : '';
 
 
 
@@ -56,7 +57,7 @@ class ACP_Options {
         ?>
         <div class="wrap">
 
-            <div style="float:left; width:34px; height:34px; margin:10px 10px 20px 0px;"><img src="<?php echo plugins_url('advanced-content-pagination/files/img/acp.gif'); ?>" style="width:34px;"/></div><h2><?php _e('Advanced Content Pagination Settings', 'ac_paging'); ?></h2>
+            <div style="float:left; width:34px; height:34px; margin:10px 10px 20px 0px;"><img src="<?php echo plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/acp.gif'); ?>" style="width:34px;"/></div><h2><?php _e('Advanced Content Pagination Settings', ACP_Core::$TEXT_DOMAIN); ?></h2>
             <br style="clear:both" />           
             <form action="<?php echo admin_url(); ?>admin.php?page=acp_options&updated=true" method="post" name="acp_options">
                 <?php
@@ -86,12 +87,13 @@ class ACP_Options {
                         include 'options_layouts/settings-button-style.php';
                         include 'options_layouts/settings-button-active-style.php';
                         include 'options_layouts/settings-button-layouts.php';
+                        include 'options_layouts/settings-custom-styles.php';
                         ?>
 
                         <tr class="type-post status-publish format-standard hentry category-uncategorized alternate iedit author-self level-0" valign="top">
                             <td colspan="4">
                                 <p class="submit">
-                                    <input type="submit" class="button button-primary" name="submit" value="<?php _e('Save Changes', 'ac_paging'); ?>" />
+                                    <input type="submit" class="button button-primary" name="submit" value="<?php _e('Save Changes', ACP_Core::$TEXT_DOMAIN); ?>" />
                                 </p>
                             </td>
                         </tr>

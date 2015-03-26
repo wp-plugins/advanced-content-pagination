@@ -1,7 +1,7 @@
 
 /*= MODAL DIALOG BOX =*/
 
-.modalDialog {
+.acp_modalDialog {
     position: fixed;
     font-family: Arial, Helvetica, sans-serif;
     top: 0;
@@ -17,12 +17,12 @@
     pointer-events: none;
 }
 
-.modalDialog:target {
+.acp_modalDialog:target {
     opacity:1;
     pointer-events: auto;
 }
 
-.modalDialog > div {
+.acp_modalDialog > div {
     width: 400px;
     position: relative;
     margin: 10% auto;
@@ -49,6 +49,8 @@
     background: linear-gradient(#fff, #999);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#999999');
 }
+
+.acp_modalDialog input {font-size: 10px !important;}
 
 .close {
     background: #606061;

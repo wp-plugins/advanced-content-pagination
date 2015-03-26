@@ -37,17 +37,18 @@ class ACP_Frontend_Style {
                     text-align: center; 
                 } 
 
-                .loader { 
+                .loader_container .loader { 
                     display: block; 
                     width: 100px;
-                    height: auto; 
+                    height: auto;
+                    box-shadow: none;
                 } 
 
                 .loader_container {
                     position: absolute; 
                     display: none;  
                     background: <?php echo $this->options->acp_load_container_css; ?>;
-                } 
+                }                
 
                 .button_style a { 
                     color: <?php echo $this->options->acp_buttons_text_color_css; ?> !important; 
@@ -57,7 +58,16 @@ class ACP_Frontend_Style {
                     height: 100%; 
                     overflow: hidden;
                 } 
-                <?php if ($this->options->acp_wp_shortcode_pagination_view == 1) {
+                <?php
+                global $post;
+
+                $btn_visual_style = $this->options->acp_buttons_visual_style;
+                $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
+                if ($current_post_button_style) {
+                    $btn_visual_style = intval($current_post_button_style);
+                }
+
+                if ($this->options->acp_wp_shortcode_pagination_view == 1 || $btn_visual_style === 3) {
                     ?>
                     .button_style { 
                         margin: 10px 2px 10px 0!important;
@@ -95,7 +105,11 @@ class ACP_Frontend_Style {
                         color:#AAAAAA;cursor: default;
                         border: 1px solid #AAAAAA!important; 
                     } 
-                <?php
+
+                    .jcarousel-control-prev,.jcarousel-control-next{
+                        display: none;
+                    }
+                    <?php
                 } else {
                     /* BUTTON STYL */
                     ?>
@@ -150,13 +164,6 @@ class ACP_Frontend_Style {
                         padding: 3px; 
                     } 
                     <?php
-                    global $post;
-                    
-                    $btn_visual_style = $this->options->acp_buttons_visual_style;
-                    $current_post_button_style = esc_attr(get_post_meta($post->ID, '_acp_button_style', true));
-                    if ($current_post_button_style) {
-                        $btn_visual_style = intval($current_post_button_style);
-                    }
                     if ($btn_visual_style == 2):
                         ?>
                         .paging_btns li.active {
@@ -190,26 +197,27 @@ class ACP_Frontend_Style {
                             line-height:16px;
                             font-family:<?php echo $this->options->acp_buttons_font_css; ?>; 
                         } 
-						button_style:hover, .button_style:hover *:not(.acp_page_number) { 
-							background:inherit;
-						}
-						.acp_previous_page{
-							background: url(<?php echo plugins_url('advanced-content-pagination/files/img/acp-prev.png') ?>) center left no-repeat <?php echo $this->options->acp_buttons_background_css; ?>;
-						}
-						.acp_previous_page:hover{
-							background: url(<?php echo plugins_url('advanced-content-pagination/files/img/acp-prev_hover.png') ?>) center left no-repeat <?php echo $this->options->acp_buttons_background_hover_css; ?>;
-							color: <?php echo $this->options->acp_buttons_hover_text_color; ?> !important;
-						}
-						.acp_next_page{
-							background: url(<?php echo plugins_url('advanced-content-pagination/files/img/acp-next.png') ?>) center right no-repeat <?php echo $this->options->acp_buttons_background_css; ?>;
-						}
-						.acp_next_page:hover{
-							background: url(<?php echo plugins_url('advanced-content-pagination/files/img/acp-next_hover.png') ?>) center right no-repeat <?php echo $this->options->acp_buttons_background_hover_css; ?>;
-							color: <?php echo $this->options->acp_buttons_hover_text_color; ?> !important;
-						}
+                        button_style:hover, .button_style:hover *:not(.acp_page_number) { 
+                            background:inherit;
+                        }
+                        .acp_previous_page{
+                            background: url(<?php echo plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/acp-prev.png') ?>) center left no-repeat <?php echo $this->options->acp_buttons_background_css; ?>;
+                        }
+                        .acp_previous_page:hover{
+                            background: url(<?php echo plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/acp-prev_hover.png') ?>) center left no-repeat <?php echo $this->options->acp_buttons_background_hover_css; ?>;
+                            color: <?php echo $this->options->acp_buttons_hover_text_color; ?> !important;
+                        }
+                        .acp_next_page{
+                            background: url(<?php echo plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/acp-next.png') ?>) center right no-repeat <?php echo $this->options->acp_buttons_background_css; ?>;
+                        }
+                        .acp_next_page:hover{
+                            background: url(<?php echo plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/acp-next_hover.png') ?>) center right no-repeat <?php echo $this->options->acp_buttons_background_hover_css; ?>;
+                            color: <?php echo $this->options->acp_buttons_hover_text_color; ?> !important;
+                        }
                         <?php
                     endif;
                 }
+                echo isset($this->options->acp_custom_css) ? $this->options->acp_custom_css : '';
                 ?>
             </style>
             <?php

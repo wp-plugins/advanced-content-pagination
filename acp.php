@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.3.0
+  Version: 1.3.1
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -44,8 +44,11 @@ class ACP_Core {
     private $loading_type;
     private $html_text;
     private $shorcodes_array = array();
+    public static $PLUGIN_DIRECTORY;
+    public static $TEXT_DOMAIN = 'ac_pagination';
 
     public function __construct() {
+        add_action('init', array(&$this, 'init_plugin_dir_name'), 1);
         add_action('plugins_loaded', array(&$this, 'load_acp_text_domain'));
         $this->acp_options = new ACP_Options();
         $this->acp_options_serialized = $this->acp_options->get_default_options();
@@ -70,7 +73,7 @@ class ACP_Core {
 
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", array(&$this, 'acp_add_plugin_settings_link'));
-        
+
         if (intval($this->acp_options_serialized->acp_paging_on_off) === 1) {
             if (function_exists('add_shortcode')) {
                 add_shortcode('nextpage', array(&$this, 'nextpage_shortcode'));
@@ -79,9 +82,9 @@ class ACP_Core {
     }
 
     public function load_acp_text_domain() {
-        load_plugin_textdomain('ac_paging', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('ac_pagination', false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
-    
+
     /**
      * Adds a box to the main column on the Post and Page edit screens.
      */
@@ -90,7 +93,7 @@ class ACP_Core {
         if (in_array($post_type, $post_types)) {
             add_meta_box(
                     'some_meta_box_name'
-                    , __('ACP Settings', 'ac_paging')
+                    , __('ACP Settings', ACP_Core::$TEXT_DOMAIN)
                     , array($this, 'render_acp_meta_box_content')
                     , $post_type
                     , 'side'
@@ -167,19 +170,19 @@ class ACP_Core {
      * Scripts and styles registration on administration pages
      */
     public function admin_page_styles_scripts() {
-        wp_register_style('plugin-css', plugins_url('advanced-content-pagination/files/css/plugin-style.css'));
+        wp_register_style('plugin-css', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/plugin-style.css'));
         wp_enqueue_style('plugin-css');
-        wp_register_style('modal-css', plugins_url('advanced-content-pagination/files/css/modal-box.css'));
+        wp_register_style('modal-css', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/modal-box.css'));
         wp_enqueue_style('modal-css');
-        wp_register_style('colorpicker-css', plugins_url('advanced-content-pagination/files/css/colorpicker.css'));
+        wp_register_style('colorpicker-css', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/colorpicker.css'));
         wp_enqueue_style('colorpicker-css');
-        wp_enqueue_script('colorpicker-js', plugins_url('advanced-content-pagination/files/js/colorpicker.js'), array('jquery'), '1.0.0', false);
-        wp_enqueue_script('plugin-scripts', plugins_url('advanced-content-pagination/files/js/plugin-scripts.js'), array('jquery'), '1.0.0', false);
+        wp_enqueue_script('colorpicker-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/colorpicker.js'), array('jquery'), '1.0.0', false);
+        wp_enqueue_script('plugin-scripts', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/plugin-scripts.js'), array('jquery'), '1.0.0', false);
 
 
         $u_agent = $_SERVER['HTTP_USER_AGENT'];
         if (preg_match('/MSIE/i', $u_agent)) {
-            wp_register_style('modal-css-ie', plugins_url('advanced-content-pagination/files/css/modal-box-ie.css'));
+            wp_register_style('modal-css-ie', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/modal-box-ie.css'));
             wp_enqueue_style('modal-css-ie');
         }
 
@@ -205,26 +208,26 @@ class ACP_Core {
                 $btn_visual_style = intval($current_post_button_style);
             }
 
-            wp_enqueue_script('front-end-scripts-js', plugins_url('advanced-content-pagination/files/js/front-end-scripts.js'), array('jquery'), '1.0.0', false);
+            wp_enqueue_script('front-end-scripts-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/front-end-scripts.js'), array('jquery'), '1.0.0', false);
             if ($this->loading_type === 2) {
-                wp_enqueue_script('acp-ajax-js', plugins_url('advanced-content-pagination/files/js/acp-ajax.js'), array('jquery'), '1.0.0', false);
+                wp_enqueue_script('acp-ajax-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/acp-ajax.js'), array('jquery'), '1.0.0', false);
                 wp_localize_script('jquery', 'acp_ajax_obj', array('url' => admin_url('admin-ajax.php')));
             }
 
             if ($this->acp_options_serialized->acp_buttons_prev_next || $btn_visual_style === 4) {
-                wp_register_style('prev-next-layout-css', plugins_url('advanced-content-pagination/files/css/prev-next-layout-css.css'));
+                wp_register_style('prev-next-layout-css', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/prev-next-layout-css.css'));
                 wp_enqueue_style('prev-next-layout-css');
                 if ($this->loading_type === 2) {
-                    wp_enqueue_script('prev-next-layout-js', plugins_url('advanced-content-pagination/files/js/prev-next-layout-js.js'), array('jquery'), '1.0.0', false);
+                    wp_enqueue_script('prev-next-layout-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/prev-next-layout-js.js'), array('jquery'), '1.0.0', false);
                 }
             } else {
-                wp_register_style('jcarousel', plugins_url('advanced-content-pagination/files/css/jcarousel.css'));
+                wp_register_style('jcarousel', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/css/jcarousel.css'));
                 wp_enqueue_style('jcarousel');
-                wp_enqueue_script('jcarousel-min-js', plugins_url('advanced-content-pagination/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
+                wp_enqueue_script('jcarousel-min-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
                 if ($this->acp_options_serialized->acp_buttons_is_arrow_fixed) {
-                    wp_enqueue_script('jcarousel-js-fixed', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
+                    wp_enqueue_script('jcarousel-js-fixed', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
                 } else {
-                    wp_enqueue_script('jcarousel-js', plugins_url('advanced-content-pagination/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+                    wp_enqueue_script('jcarousel-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
                 }
             }
         }
@@ -235,7 +238,7 @@ class ACP_Core {
      */
     public function add_plugin_options_page() {
         if (function_exists('add_options_page')) {
-            add_menu_page(__('AP Pagination','ac_paging'), __('AP Pagination','ac_paging'), 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url('advanced-content-pagination/files/img/web_site.png'), 100);
+            add_menu_page(__('AP Pagination', ACP_Core::$TEXT_DOMAIN), __('AP Pagination', ACP_Core::$TEXT_DOMAIN), 'manage_options', 'acp_options', array(&$this->acp_options, 'options_form'), plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/web_site.png'), 100);
         }
     }
 
@@ -263,7 +266,7 @@ class ACP_Core {
             $this->query_page = get_query_var('page') ? get_query_var('page') : 1;
             $this->page++;
             extract(shortcode_atts(array(
-                'title' => __('Title','ac_paging')
+                'title' => __('Title', ACP_Core::$TEXT_DOMAIN)
                             ), $atts), EXTR_OVERWRITE);
 
             $link;
@@ -503,7 +506,7 @@ class ACP_Core {
      * load shortcode content via ajax
      */
     public function pagination_with_ajax() {
-        $response = __('No Content','ac_paging');
+        $response = __('No Content', ACP_Core::$TEXT_DOMAIN);
         if (isset($_POST['acp_pid']) && !empty($_POST['acp_pid'])) {
             $acp_pid = $_POST['acp_pid'];
             $acp_currpage = $_POST['acp_currpage'];
@@ -613,32 +616,32 @@ class ACP_Core {
 
         <div id="acp_dialog" style="display:none;">
             <div class="shortcode_dialog" style="padding:0px 20px 20px 20px;">    
-                <h2 style="font-weight:normal; padding-bottom:10px;"><?php _e('Pagination Button Components','ac_paging'); ?> </h2>
+                <h2 style="font-weight:normal; padding-bottom:10px;"><?php _e('Pagination Button Components', ACP_Core::$TEXT_DOMAIN); ?> </h2>
 
                 <div class="acp_title_wrap">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td style="width:160px; vertical-align:top; padding-top:5px;"><label class="shortcode_title" for="shortcode_title" style="font-size:13px; font-weight:bold;color:#333333"><?php _e('Button Title:','ac_paging'); ?></label></td>
+                            <td style="width:160px; vertical-align:top; padding-top:5px;"><label class="shortcode_title" for="shortcode_title" style="font-size:13px; font-weight:bold;color:#333333"><?php _e('Button Title:', ACP_Core::$TEXT_DOMAIN); ?></label></td>
                             <td>
                                 <input id="shortcode_title" class="shortcode_title" type="text"  style="border:#cccccc 1px solid; padding:3px 3px; width:350px; font-size:16px;" maxlength="100" />
                                 <br />
-                                <span style="font-size:12px; font-style:italic; color:#555555; cursor:help;"><?php _e('maximum characters','ac_paging'); ?> 
+                                <span style="font-size:12px; font-style:italic; color:#555555; cursor:help;"><?php _e('maximum characters', ACP_Core::$TEXT_DOMAIN); ?> 
                                     <span title="Pagination Button Layout #1 with image title and description">L1:15</span> , 
                                     <span title="Pagination Button Layout #2 with title and description">L2:24</span> , 
                                     <span title="Pagination Button Layouts #3, #4 and #5">L3,L4,L5:43</span>
                                 </span>
-                                <div class="error_msg"><span class="required_field"><?php _e('The title is required field!','ac_paging'); ?></span></div></td>
+                                <div class="error_msg"><span class="required_field"><?php _e('The title is required field!', ACP_Core::$TEXT_DOMAIN); ?></span></div></td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="submit_container" style="text-align:right; padding-right:50px; display:block; padding-top:15px;">
-                    <button id="insert_shorcode" class="insert_shortcode button button-primary button-large"><?php _e('Insert Page','ac_paging'); ?></button>
+                    <button id="insert_shorcode" class="insert_shortcode button button-primary button-large"><?php _e('Insert Page', ACP_Core::$TEXT_DOMAIN); ?></button>
                 </div>
 
                 <div class="button_layout_wrapper">
                     <div style="margin:10px auto; font-size: 15px; font-weight: bold; text-align: center">
-                        <?php _e('Current button layout on website','ac_paging');?>
+                        <?php _e('Current button layout on website', ACP_Core::$TEXT_DOMAIN); ?>
                     </div>
 
                     <div class="acp_button_layout">                    
@@ -698,14 +701,14 @@ class ACP_Core {
      * generate html loading type metabox
      */
     private function acp_loading_type_metabox_html($acp_loading_type) {
-        $loading_types = array(array('id' => 'acp_loading_type_reload', 'label' => __('Reload Page', 'ac_paging'), 'value' => '1'),
-            array('id' => 'acp_loading_type_ajax', 'label' => __('Ajax', 'ac_paging'), 'value' => '2'));
+        $loading_types = array(array('id' => 'acp_loading_type_reload', 'label' => __('Reload Page', ACP_Core::$TEXT_DOMAIN), 'value' => '1'),
+            array('id' => 'acp_loading_type_ajax', 'label' => __('Ajax', ACP_Core::$TEXT_DOMAIN), 'value' => '2'));
 
         if (empty($acp_loading_type)) {
             $acp_loading_type = $this->loading_type;
         }
 
-        $meta_html = '<h4>' . __('Page Loading Type', 'ac_paging') . '</h4>';
+        $meta_html = '<h4>' . __('Page Loading Type', ACP_Core::$TEXT_DOMAIN) . '</h4>';
         foreach ($loading_types as $loading_type) {
             $checked = ($loading_type['value'] == $acp_loading_type) ? 'checked="checked"' : '';
             $meta_html.= '<input id="' . $loading_type['id'] . '" type="radio" value="' . $loading_type['value'] . '" ' . $checked . ' name="acp_loading_type" />';
@@ -719,15 +722,16 @@ class ACP_Core {
      * generate html button  style metabox
      */
     private function acp_button_style_metabox_html($acp_button_style) {
-        $button_styles = array(array('id' => 'acp_button_style_title', 'label' => __('Title', 'ac_paging'), 'value' => '1'),
-            array('id' => 'acp_button_style_title_number', 'label' => __('Title & Number', 'ac_paging'), 'value' => '2'),
-            array('id' => 'acp_button_style_next_prev', 'label' => __('Previous & Next', 'ac_paging'), 'value' => '4'));
+        $button_styles = array(array('id' => 'acp_button_style_title', 'label' => __('Title', ACP_Core::$TEXT_DOMAIN), 'value' => '1'),
+            array('id' => 'acp_button_style_title_number', 'label' => __('Title & Number', ACP_Core::$TEXT_DOMAIN), 'value' => '2'),
+            array('id' => 'acp_button_style_next_prev', 'label' => __('Previous & Next', ACP_Core::$TEXT_DOMAIN), 'value' => '4'),
+            array('id' => 'acp_button_style_number', 'label' => __('Number', ACP_Core::$TEXT_DOMAIN), 'value' => '3'));
 
         if (empty($acp_button_style)) {
             $acp_button_style = intval($this->acp_options_serialized->acp_buttons_visual_style);
         }
 
-        $meta_html = '<h4>' . __('Pagination Button Layout', 'ac_paging') . '</h4>';
+        $meta_html = '<h4>' . __('Pagination Button Layout', ACP_Core::$TEXT_DOMAIN) . '</h4>';
         foreach ($button_styles as $button_style) {
             $checked = ($button_style['value'] == $acp_button_style) ? 'checked="checked"' : '';
             $meta_html.= '<input id="' . $button_style['id'] . '" type="radio" value="' . $button_style['value'] . '" ' . $checked . ' name="acp_button_style" />';
@@ -736,14 +740,21 @@ class ACP_Core {
 
         echo $meta_html;
     }
-    
+
+    public function init_plugin_dir_name() {
+        $plugin_dir_path = plugin_dir_path(__FILE__);
+        $path_array = array_values(array_filter(explode(DIRECTORY_SEPARATOR, $plugin_dir_path)));
+        $path_last_part = $path_array[count($path_array) - 1];
+        ACP_Core::$PLUGIN_DIRECTORY = untrailingslashit($path_last_part);
+    }
+
     // Add settings link on plugin page
-    public function acp_add_plugin_settings_link($links){
+    public function acp_add_plugin_settings_link($links) {
         $settings_link = '<a href="' . admin_url() . 'admin.php?page=acp_options">' . __('Settings', 'default') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
-    
+
 }
 
 new ACP_Core();
