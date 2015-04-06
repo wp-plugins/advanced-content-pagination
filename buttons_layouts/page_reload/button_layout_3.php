@@ -2,14 +2,14 @@
 
 if ($acp_paging_buttons_location === 1) {
     if (!$curr_page) {
-        $html .= '<div class="acp_wrapper"><div data-jcarousel="true" class="jcarousel"><ul class="paging_btns" id="acp_paging_menu"><li tabindex="0" class="button_style nbox' . $active_item . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li>';
+        $html .= '<div class="acp_wrapper"><div data-jcarousel="true" class="jcarousel"><ul class="paging_btns" id="acp_paging_menu"><li tabindex="0" class="button_style nbox' . $active_item . '" id="item' . $page . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li>';
         if ($pages_count == 1) {
             $html .= '</ul><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-prev">‹</a><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-next">›</a></div><div id="acp_content" class="acp_content">' . $shortcode_content . '</div></div>';
         }
     } elseif ($curr_page == $pages_count - 1) {
-        $html .= '<li tabindex="0" class="button_style nbox' . $active_item . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li></ul><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-prev">‹</a><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-next">›</a></div>' . '<div id="acp_content" class="acp_content">' . $shortcode_content . '</div></div>';
+        $html .= '<li tabindex="0" class="button_style nbox' . $active_item . '" id="item' . $page . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li></ul><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-prev">‹</a><a data-jcarouselcontrol="true" href="#" class="jcarousel-control-next">›</a></div>' . '<div id="acp_content" class="acp_content">' . $shortcode_content . '</div></div>';
     } else {
-        $html .= '<li tabindex="0" class="button_style nbox' . $active_item . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li>';
+        $html .= '<li tabindex="0" class="button_style nbox' . $active_item . '" id="item' . $page . '">' . $link . '<div class="acp_page_number">' . $page . '</div></a></li>';
     }
 } else if ($acp_paging_buttons_location === 2) {
     if (!$curr_page) {
