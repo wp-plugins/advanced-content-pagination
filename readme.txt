@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: pagination, post pagination, content pagination, multiple pages, nextpage, pagination buttons, pagination buttons with text, tabbed content, ajax load content, post slider
 Requires at least: 2.7.0
 Tested up to: 4.1.1
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ Perfect solution to paginate posts and split a long post to multiple pages. Allo
 * | Pagination buttons with only Previous/Next buttons
 * | Shortcode `[nextpage title="..."]..content..[/nextpage]`
 * | Ajax and simple (reloading) pagination 
+* | Full integration and compatibility with Visual Composers
 * | Adds pagination buttons slider if those takes more width
 * | Special button icon on post TinyMCE editor to split content to many pages
 * | Ability to set different button layout and content loading type per post/page
@@ -62,6 +63,9 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 [youtube https://www.youtube.com/watch?v=59UE-IyNnb0 /]
 
+**Video Guide - How to use ACP with Visual Composers**
+
+[youtube https://www.youtube.com/watch?v=xpxN8wovbAc /]
 
 == Installation ==
 
@@ -70,7 +74,10 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 == Frequently Asked Questions ==
 
-= Please Check the Following Advanced Post Pagination Resources =
+* Video Guide - How to use ACP with Visual Composers:
+* https://www.youtube.com/watch?v=xpxN8wovbAc
+
+= Also please check the following Advanced Post Pagination resources =
 
 * Plugin Page: <http://gvectors.com/advanced-content-pagination/>
 * Support Forum: <http://gvectors.com/questions/>
@@ -88,6 +95,11 @@ Click on the "AP Pagination" menu and manage pagination settings. Here you can m
 
 == Changelog ==
 
+= 1.4.0 =
+
+* Added : Full integration and compatibility with Visual Composers
+* Video Guide - How to use ACP with Visual Composers:
+* https://www.youtube.com/watch?v=xpxN8wovbAc
 
 = 1.3.1 =
 * Added : Numeric layout option in pagination layout choser on edit post screen

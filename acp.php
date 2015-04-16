@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.3.1
+  Version: 1.4.0
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -79,6 +79,8 @@ class ACP_Core {
                 add_shortcode('nextpage', array(&$this, 'nextpage_shortcode'));
             }
         }
+        // Add nextpage shortcode to the Visual Composer
+        add_action('vc_before_init', array(&$this, 'acp_shordcode_to_vc'));
     }
 
     public function load_acp_text_domain() {
@@ -279,7 +281,7 @@ class ACP_Core {
             }
 
             $link = _wp_link_page($this->page);
-            $pattern = get_shortcode_regex();
+            $pattern = '\[(\[?)(nextpage)(?![\w-])([^\]\/]*(?:\/(?!\])[^\]\/]*)*?)(?:(\/)\]|\](?:([^\[]*+(?:\[(?!\/\2\])[^\[]*+)*+)\[\/\2\])?)(\]?)';
 
             $link = substr_replace($link, $anchor . '">', -2);
 
@@ -753,6 +755,36 @@ class ACP_Core {
         $settings_link = '<a href="' . admin_url() . 'admin.php?page=acp_options">' . __('Settings', 'default') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
+    }
+
+    public function acp_shordcode_to_vc() {
+        vc_map(array(
+            "name" => __("Advanced Post Pagination", ACP_Core::$TEXT_DOMAIN),
+            "base" => "nextpage",
+            'description' => __("Splits long content to multiple pages", ACP_Core::$TEXT_DOMAIN),
+            'icon' => plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/img/web_site.png'),
+            'show_settings_on_create' => true,
+            "class" => "",
+            "category" => __("Content", 'js_composer'),
+            "params" => array(
+                array(
+                    "type" => "textfield",
+                    "class" => "",
+                    "heading" => __("Pagination button title", ACP_Core::$TEXT_DOMAIN),
+                    "param_name" => "title",
+                    "value" => '',
+                    "description" => __("Enter your pagination button title.", ACP_Core::$TEXT_DOMAIN)
+                ),
+                array(
+                    "type" => "textarea_html",
+                    "class" => "",
+                    "heading" => __("subPage content", ACP_Core::$TEXT_DOMAIN),
+                    "param_name" => "content",
+                    "value" => '',
+                    "description" => ''
+                )
+            )
+        ));
     }
 
 }
