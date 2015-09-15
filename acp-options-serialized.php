@@ -26,6 +26,10 @@ class ACP_Options_Serialized {
     public $acp_active_button_background_css; // pagination active button background css        
     public $acp_active_button_text_color_css; // pagination active button text color css
     
+    // jCarousel wrap option
+    
+    public $acp_jcarousel_wrapping;
+    
     // LOADER CONTAINER STYLES 
     public $acp_load_container_css;
 
@@ -60,6 +64,7 @@ class ACP_Options_Serialized {
         $this->acp_active_button_text_color_css = $options['acp_active_button_text_color_css'];
         $this->acp_load_container_css = $options['acp_load_container_css'];
         $this->acp_custom_css = isset($options['acp_custom_css']) ? $options['acp_custom_css'] : '';
+        $this->acp_jcarousel_wrapping = isset($options['acp_jcarousel_wrapping']) ? $options['acp_jcarousel_wrapping'] : '';
     }
 
     public function toArray() {
@@ -83,8 +88,10 @@ class ACP_Options_Serialized {
             'acp_active_button_border_css' => $this->acp_active_button_border_css,
             'acp_active_button_background_css' => $this->acp_active_button_background_css,
             'acp_active_button_text_color_css' => $this->acp_active_button_text_color_css,
+            'acp_active_button_text_color_css' => $this->acp_active_button_text_color_css,
             'acp_load_container_css' => $this->acp_load_container_css,
-            'acp_custom_css' => $this->acp_custom_css
+            'acp_custom_css' => $this->acp_custom_css,
+            'acp_jcarousel_wrapping' => $this->acp_jcarousel_wrapping
         );
 
         return $options;
@@ -117,7 +124,8 @@ class ACP_Options_Serialized {
             'acp_active_button_background_css' => '#ffffff', // pagination active button background css        
             'acp_active_button_text_color_css' => '#333333',
             'acp_load_container_css' => 'rgba(174,174,174,0.7)',
-            'acp_custom_css' => ''
+            'acp_custom_css' => '',
+            'acp_jcarousel_wrapping' => 'circular'
         );
         add_option($this->acp_option_slug, serialize($options));
     }

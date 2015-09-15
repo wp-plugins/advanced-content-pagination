@@ -2,7 +2,7 @@
 /*
   Plugin Name: Advanced Post Pagination
   Description: Creates fully customizable pagination buttons for post and page content with five different layouts
-  Version: 1.4.0
+  Version: 1.4.1
   Author: gVectors Team (A. Chakhoyan, G. Zakaryan, H. Martirosyan)
   Author URI: http://www.gvectors.com/
   Plugin URI: http://www.gvectors.com/advanced-content-pagination/
@@ -154,7 +154,7 @@ class ACP_Core {
 
     public function do_nextpage_shortcode_in_excerpt($excerpt) {
         if (has_excerpt()) {
-            return $excerpt;
+            return '<p>' . $excerpt . '</p>';
         }
         $excerpt = get_the_content();
         $excerpt_count = $this->acp_options_serialized->acp_excerpts_count;
@@ -164,7 +164,7 @@ class ACP_Core {
             $excerpt = preg_replace($this->open_pattern, '', $excerpt);
             $excerpt = str_replace('[/nextpage]', '', $excerpt);
             $excerpt = strip_shortcodes($excerpt);
-            return wp_trim_words($excerpt, $excerpt_count);
+            return '<p>' . wp_trim_words($excerpt, $excerpt_count) . '</p>';
         }
     }
 
@@ -228,8 +228,10 @@ class ACP_Core {
                 wp_enqueue_script('jcarousel-min-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jquery.jcarousel.min.js'), array('jquery'), '0.3.0', false);
                 if ($this->acp_options_serialized->acp_buttons_is_arrow_fixed) {
                     wp_enqueue_script('jcarousel-js-fixed', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jcarousel.responsive_fixed.js'), array('jquery'), '0.3.0', false);
+                    wp_localize_script('jcarousel-js-fixed', 'jcarouselWrapping', array('wrapType' => $this->acp_options_serialized->acp_jcarousel_wrapping));
                 } else {
                     wp_enqueue_script('jcarousel-js', plugins_url(ACP_Core::$PLUGIN_DIRECTORY . '/files/js/jcarousel.responsive.js'), array('jquery'), '0.3.0', false);
+                    wp_localize_script('jcarousel-js', 'jcarouselWrapping', array('wrapType' => $this->acp_options_serialized->acp_jcarousel_wrapping));
                 }
             }
         }

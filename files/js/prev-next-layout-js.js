@@ -27,9 +27,9 @@ jQuery(document).ready(function ($) {
     });
     buttons.pop();
 
-    $('ul.paging_btns li.button_style').live('click', function () { 
+    $(document).delegate('ul.paging_btns li.button_style', 'click', function () {
         var itemId = $(this).attr('id');
-        var clickedItemId = parseInt(itemId.substring(4));        
+        var clickedItemId = parseInt(itemId.substring(4));
         var prev = 0;
         var next = 0;
 
@@ -45,12 +45,12 @@ jQuery(document).ready(function ($) {
         }
         var nBox = hasClassNbox ? 'nbox' : '';
         var buttonsHtml = '';
-        if($(this).hasClass('only_prev_next')){
+        if ($(this).hasClass('only_prev_next')) {
             var next_title = $('#acp_only_next').val();
             var prev_title = $('#acp_only_prev').val();
             buttonsHtml = "<li class='button_style " + nBox + "acp_previous_page only_prev_next item" + (parseInt(prev) + 1) + "' id='item" + (parseInt(prev) + 1) + "'><div class='acp_title'>" + prev_title + "</div></li>";
             buttonsHtml += "<li  class='button_style " + nBox + " acp_next_page only_prev_next item" + (parseInt(next) + 1) + "' id='item" + (parseInt(next) + 1) + "'><div class='acp_title'>" + next_title + "</div></li>";
-        }else{
+        } else {
             buttonsHtml = "<li class='button_style " + nBox + "acp_previous_page item" + (parseInt(prev) + 1) + "' id='item" + (parseInt(prev) + 1) + "'>" + buttons[prev].html() + "</li>";
             buttonsHtml += "<li  class='button_style " + nBox + " acp_next_page item" + (parseInt(next) + 1) + "' id='item" + (parseInt(next) + 1) + "'>" + buttons[next].html() + "</li>";
         }

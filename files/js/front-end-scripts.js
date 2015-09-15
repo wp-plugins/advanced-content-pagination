@@ -1,6 +1,6 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function ($) {
     $('#acp_paging_menu >:not(li)').remove();
-    
+
     init_buttons_width();
 
     function init_buttons_width() {

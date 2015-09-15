@@ -49,9 +49,8 @@ class ACP_Options {
             $this->acp_options_serialized->acp_active_button_text_color_css = $_POST['acp_active_button_text_color_css'];
             $this->acp_options_serialized->acp_load_container_css = isset($_POST['acp_load_container_css']) ? $_POST['acp_load_container_css'] : 'rgba(174,174,174,0.7)';
             $this->acp_options_serialized->acp_custom_css = isset($_POST['acp_custom_css']) ? $_POST['acp_custom_css'] : '';
-
-
-
+            $this->acp_options_serialized->acp_jcarousel_wrapping = isset($_POST['acp_jcarousel_wrapping']) ? $_POST['acp_jcarousel_wrapping'] : 'circular';
+            
             $this->acp_options_serialized->updateOptions();
         }
         ?>
@@ -87,6 +86,7 @@ class ACP_Options {
                         include 'options_layouts/settings-button-style.php';
                         include 'options_layouts/settings-button-active-style.php';
                         include 'options_layouts/settings-button-layouts.php';
+                        include 'options_layouts/settings-jcarousel.php';
                         include 'options_layouts/settings-custom-styles.php';
                         ?>
 
